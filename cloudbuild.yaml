@@ -1,0 +1,93 @@
+steps:
+- id: 'branch name'
+  name: 'alpine'
+  entrypoint: 'sh'  
+  args: 
+  - '-c'
+  - | 
+      echo "***********************"
+      echo "$TAG_NAME"
+      echo "**********************"
+
+      set -eu
+      echo "TAG_NAME: $TAG_NAME"
+
+      if [ -z "$TAG_NAME" ]; then
+        echo "No hay TAG_NAME (trigger por rama); no se fija entorno."
+        exit 0
+      fi
+
+      case "$TAG_NAME" in
+        dev-*) printf 'BRANCH_NAME=dev\n' > /workspace/.env; echo "Env=dev" ;;
+        pre-*) printf 'BRANCH_NAME=pre\n' > /workspace/.env; echo "Env=pre" ;;
+        pro-*) printf 'BRANCH_NAME=pro\n' > /workspace/.env; echo "Env=pro" ;;
+        *)     echo "Prefijo no válido. Use dev-/pre-/pro-"; exit 1 ;;
+      esac
+      
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.5.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+      set -eu
+      . /workspace/.env 2>/dev/null || true
+
+      if [ -d "environments/$$BRANCH_NAME/" ]; then
+        echo ""
+        echo "*************** TERRAFORM INIT ******************"
+        echo "******* At environment: $$BRANCH_NAME *******"
+        echo "************************************************"
+        cd "environments/$$BRANCH_NAME"
+        terraform init 
+        cd ../../
+      else
+        echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
+      fi 
+
+# [START tf-plan]
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.5.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      set -eu
+      . /workspace/.env 2>/dev/null || true
+      if [ -d "environments/$$BRANCH_NAME/" ]; then
+        echo ""
+        echo "*************** TERRAFORM PLAN ******************"
+        echo "******* At environment: $$BRANCH_NAME *********"
+        echo "*************************************************"
+        cd "environments/$$BRANCH_NAME"
+        terraform plan 
+        cd ../../
+      else
+        echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
+      fi 
+# [END tf-plan]
+
+# [START tf-apply]
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.5.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      set -eu
+      . /workspace/.env 2>/dev/null || true
+      if [ -d "environments/$$BRANCH_NAME/" ]; then
+        echo ""
+        echo "*************** TERRAFORM APPLY ******************"
+        echo "******* At environment: $$BRANCH_NAME *********"
+        echo "*************************************************"
+        cd "environments/$$BRANCH_NAME"     
+        terraform apply -auto-approve
+      else
+        echo "***************************** SKIPPING APPLYING *******************************"
+        echo "Branch '$$BRANCH_NAME' does not represent an official environment."
+        echo "*******************************************************************************"
+      fi
+# [END tf-apply]     
+options:
+  logging: CLOUD_LOGGING_ONLY
