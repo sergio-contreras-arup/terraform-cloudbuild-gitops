@@ -36,7 +36,7 @@ steps:
       if [ -d "environments/$$BRANCH_NAME/" ]; then
         echo ""
         echo "*************** TERRAFORM INIT ******************"
-        echo "******* At environment: $$BRANCH_NAME *******"
+        echo "******* Entorno: $$BRANCH_NAME *******"
         echo "************************************************"
         cd "environments/$$BRANCH_NAME"
         terraform init 
@@ -57,7 +57,7 @@ steps:
       if [ -d "environments/$$BRANCH_NAME/" ]; then
         echo ""
         echo "*************** TERRAFORM PLAN ******************"
-        echo "******* At environment: $$BRANCH_NAME *********"
+        echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"
         terraform plan 
@@ -79,7 +79,7 @@ steps:
       if [ -d "environments/$$BRANCH_NAME/" ]; then
         echo ""
         echo "*************** TERRAFORM APPLY ******************"
-        echo "******* At environment: $$BRANCH_NAME *********"
+        echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"     
         terraform apply -auto-approve
