@@ -77,3 +77,9 @@ variable "deletion_protection" {
   type        = bool
   default     = false
 }
+
+variable "frontend_bucket_name" {
+  description = "Nombre del bucket de GCS para la web estática"
+  type        = string
+  default     = "frontend"
+}
