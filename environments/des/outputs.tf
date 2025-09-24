@@ -24,22 +24,22 @@ output "user_password" {
   sensitive   = true
 }
 
-output "gke_cluster_name" {
-  description = "Nombre del clúster GKE"
-  value       = module.gke.cluster_name
-}
+# output "gke_cluster_name" {
+#   description = "Nombre del clúster GKE"
+#   value       = module.gke.cluster_name
+# }
 
-output "gke_endpoint" {
-  description = "Endpoint del clúster GKE"
-  value       = module.gke.endpoint
-}
+# output "gke_endpoint" {
+#   description = "Endpoint del clúster GKE"
+#   value       = module.gke.endpoint
+# }
 
-output "gcs_bucket_name" {
-  description = "Nombre del bucket de Cloud Storage"
-  value       = module.cloud_storage.bucket_name
-}
+# output "gcs_bucket_name" {
+#   description = "Nombre del bucket de Cloud Storage"
+#   value       = module.cloud_storage.bucket_name
+# }
 
-output "gcs_bucket_url" {
-  description = "URL del bucket de Cloud Storage"
-  value       = module.cloud_storage.bucket_url
-}
+# output "gcs_bucket_url" {
+#   description = "URL del bucket de Cloud Storage"
+#   value       = module.cloud_storage.bucket_url
+# }
