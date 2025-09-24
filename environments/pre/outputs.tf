@@ -43,3 +43,5 @@ output "gcs_bucket_url" {
   description = "URL del bucket de Cloud Storage"
   value       = module.cloud_storage.bucket_url
 }
+
+
