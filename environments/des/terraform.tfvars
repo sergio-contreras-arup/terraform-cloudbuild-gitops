@@ -1,4 +1,4 @@
-project_id    = "my-project-pro-473408"
+project_id    = "des-pgoum"
 region        = "europe-southwest1"
-instance_name = "pro-pg-main"
+instance_name = "des-pg-main"
 
