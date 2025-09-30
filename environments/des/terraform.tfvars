@@ -1,4 +1,4 @@
-project_id    = "madrid-pgoum-des"
+project_id    = "des-pgoum"
 region        = "europe-southwest1"
 instance_name = "des-pg-main"
 
