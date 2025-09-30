@@ -107,7 +107,7 @@ variable "gcs_bucket_name" {
 variable "gcs_location" {
   description = "Ubicación del bucket"
   type        = string
-  default     = "EU"
+  default     = "europe-southwest1"
 }
 
 variable "gcs_storage_class" {
