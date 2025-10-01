@@ -82,7 +82,7 @@ variable "deletion_protection" {
 variable "gke_cluster_name" {
   description = "Nombre del clúster GKE"
   type        = string
-  default     = "dev-gke"
+  default     = "dev-carto-gke"
 }
 
 variable "gke_location" {
