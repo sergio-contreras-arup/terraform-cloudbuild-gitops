@@ -38,15 +38,11 @@ resource "google_container_cluster" "this" {
     channel = var.release_channel
   }
 
-  network    = var.network
-  subnetwork = var.subnetwork
-
+  network = google_compute_network.vpc.self_link
+  subnetwork = google_compute_subnetwork.subnet.self_link
+  ip_range_pods = "pods-range"
+  ip_range_services = "services-range"
   resource_labels = var.resource_labels
-
-  ip_allocation_policy {
-    cluster_secondary_range_name  = "pods-range"
-    services_secondary_range_name = "services-range"
-  }
 
   deletion_protection = false
 

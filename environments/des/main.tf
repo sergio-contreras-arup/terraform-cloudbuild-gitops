@@ -23,8 +23,6 @@ module "gke" {
   location         = var.gke_location
   cluster_name     = var.gke_cluster_name
   release_channel  = var.gke_release_channel
-  network    = google_compute_network.vpc.self_link
-  subnetwork = google_compute_subnetwork.subnet.self_link
   resource_labels  = { env = "dev-carto" }
 }
 
