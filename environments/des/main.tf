@@ -23,9 +23,11 @@ module "gke" {
   location         = var.gke_location
   cluster_name     = var.gke_cluster_name
   release_channel  = var.gke_release_channel
-  network          = null
-  subnetwork       = null
-  resource_labels  = { env = "dev" }
+  network    = google_compute_network.vpc.self_link
+  subnetwork = google_compute_subnetwork.subnet.self_link
+  ip_range_pods     = "pods-range"
+  ip_range_services = "services-range"
+  resource_labels  = { env = "dev-carto" }
 }
 
 # module "cloud_storage" {
