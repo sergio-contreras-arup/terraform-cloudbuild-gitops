@@ -25,8 +25,6 @@ module "gke" {
   release_channel  = var.gke_release_channel
   network    = google_compute_network.vpc.self_link
   subnetwork = google_compute_subnetwork.subnet.self_link
-  ip_range_pods     = "pods-range"
-  ip_range_services = "services-range"
   resource_labels  = { env = "dev-carto" }
 }
 
