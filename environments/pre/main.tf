@@ -28,6 +28,12 @@ module "gke" {
   resource_labels  = { env = "pre" }
 }
 
+# Denegar IPs externas a nivel de proyecto
+module "vm_external_ip_policy" {
+  source     = "../../modules/org_policy_vm_external_ip"
+  project_id = var.project_id
+}
+
 # module "cloud_storage" {
 #   source = "../../modules/cloud_storage"
 

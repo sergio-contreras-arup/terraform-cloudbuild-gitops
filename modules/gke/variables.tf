@@ -41,4 +41,22 @@ variable "resource_labels" {
   default     = {}
 }
 
+variable "master_ipv4_cidr_block" {
+  description = "Bloque CIDR para el plano de control privado (master). Requerido para clúster privado."
+  type        = string
+  default     = "172.16.0.0/28"
+}
+
+variable "pods_secondary_range_name" {
+  description = "Nombre del rango secundario para Pods en la subred"
+  type        = string
+  default     = "pods-range"
+}
+
+variable "services_secondary_range_name" {
+  description = "Nombre del rango secundario para Services en la subred"
+  type        = string
+  default     = "services-range"
+}
+
 

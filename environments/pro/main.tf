@@ -15,3 +15,10 @@ module "cloudsql_postgres" {
   user_name           = var.user_name
   deletion_protection = var.deletion_protection
 }
+
+# Denegar IPs externas a nivel de proyecto
+module "vm_external_ip_policy" {
+  source     = "../../modules/org_policy_vm_external_ip"
+  project_id = var.project_id
+}
+
