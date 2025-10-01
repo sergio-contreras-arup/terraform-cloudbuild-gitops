@@ -40,8 +40,6 @@ resource "google_container_cluster" "this" {
 
   network = google_compute_network.vpc.self_link
   subnetwork = google_compute_subnetwork.subnet.self_link
-  ip_range_pods = "pods-range"
-  ip_range_services = "services-range"
   resource_labels = var.resource_labels
 
   deletion_protection = false
