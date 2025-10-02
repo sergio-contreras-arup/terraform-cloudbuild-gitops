@@ -90,7 +90,7 @@ variable "instance_name" {
 variable "frontend_storage_static_name" {
   description = "Nombre del bucket de GCS para la web estática"
   type        = string
-  default     = "frontend"
+  default     = "pem-frontend"
 }
 
 ########## Backend ##########
