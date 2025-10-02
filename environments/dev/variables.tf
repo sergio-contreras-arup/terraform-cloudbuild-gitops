@@ -1,4 +1,4 @@
-########## Configuración base ##########
+########## Base ##########
 variable "project_id" {
   description = "ID del proyecto de GCP (p.ej., my-gcp-project)"
   type        = string
@@ -80,11 +80,17 @@ variable "deletion_protection" {
   default     = false
 }
 
+variable "carto_object_storage_name" {
+  description = "Nombre del bucket de GCS para archivos de CARTO"
+  type        = string
+  default     = "carto-bucket"
+}
+
 ########## Frontend ##########
 variable "frontend_storage_static_name" {
-    description = "Nombre del bucket de GCS para la web estática"
-    type        = string
-    default     = "frontend"
+  description = "Nombre del bucket de GCS para la web estática"
+  type        = string
+  default     = "frontend"
 }
 
 ########## Backend ##########
