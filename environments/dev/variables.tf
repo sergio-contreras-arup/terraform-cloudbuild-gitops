@@ -14,6 +14,7 @@ variable "apis" {
   description = "Lista de APIs de GCP a habilitar"
   type        = list(string)
   default = [
+    "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "artifactregistry.googleapis.com",
     "cloudbuild.googleapis.com",
