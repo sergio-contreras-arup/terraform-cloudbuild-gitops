@@ -24,7 +24,6 @@ module "static_site" {
   bucket_name   = var.frontend_storage_static_name
   region        = var.region
 }
-
 ########## Backend ##########
 # module "artifact_registry" {
 #   source = "../../modules/artifact_registry"
