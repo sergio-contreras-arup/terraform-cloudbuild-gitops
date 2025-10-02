@@ -10,6 +10,19 @@ variable "region" {
   default     = "europe-west1"
 }
 
+variable "apis" {
+  description = "Lista de APIs de GCP a habilitar"
+  type        = list(string)
+  default = [
+    "compute.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "iam.googleapis.com",
+    "sqladmin.googleapis.com",
+    "storage.googleapis.com",
+  ]
+}
+
 # ########## CARTO ##########
 variable "instance_name" {
   description = "Nombre de la instancia de Cloud SQL"
@@ -80,10 +93,52 @@ variable "instance_name" {
 #   default     = false
 # }
 
+variable "carto_vpc_name" {
+  description = "Nombre de la VPC"
+  type        = string
+  default     = "carto-vpc"
+}
+
+variable "carto_subnet_name" {
+  description = "Nombre de la subred para CARTO"
+  type        = string
+  default     = "carto-subnet"
+}
+
+variable "carto_subnet_ip_cidr_range" {
+  description = "Rango de IPs para la subred de CARTO"
+  type        = string
+  default     = "10.0.1.0/20"
+}
+
+variable "carto_secondary_ip_ranges" {
+  description = "Rangos de IPs secundarios para la subred de CARTO"
+  type = map(object({
+    ip_cidr_range = string
+    range_name    = string
+  }))
+  default = {
+    pods = {
+      ip_cidr_range = "10.4.0.0/24"
+      range_name    = "pods"
+    }
+    services = {
+      ip_cidr_range = "10.0.32.0/24"
+      range_name    = "services"
+    }
+  }
+}
+
 variable "carto_object_storage_name" {
   description = "Nombre del bucket de GCS para archivos de CARTO"
   type        = string
   default     = "carto-storage-bucket"
+}
+
+variable "carto_gke_cluster_name" {
+  description = "Nombre del clúster de GKE para CARTO"
+  type        = string
+  default     = "carto-gke-cluster"
 }
 
 ########## Frontend ##########
@@ -97,7 +152,7 @@ variable "frontend_storage_static_name" {
 variable "artifact_repository_name" {
   description = "Nombre del repositorio de Artifact Registry"
   type        = string
-  default     = "backend-repo"
+  default     = "backend-image-repository"
 }
 
 variable "artifact_repository_description" {
