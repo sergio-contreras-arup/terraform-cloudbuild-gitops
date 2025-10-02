@@ -83,7 +83,7 @@ variable "instance_name" {
 variable "carto_object_storage_name" {
   description = "Nombre del bucket de GCS para archivos de CARTO"
   type        = string
-  default     = "carto-bucket"
+  default     = "carto-storage-bucket"
 }
 
 ########## Frontend ##########
