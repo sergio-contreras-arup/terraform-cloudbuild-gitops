@@ -80,11 +80,11 @@ variable "instance_name" {
 #   default     = false
 # }
 
-# variable "carto_object_storage_name" {
-#   description = "Nombre del bucket de GCS para archivos de CARTO"
-#   type        = string
-#   default     = "carto-bucket"
-# }
+variable "carto_object_storage_name" {
+  description = "Nombre del bucket de GCS para archivos de CARTO"
+  type        = string
+  default     = "carto-bucket"
+}
 
 ########## Frontend ##########
 variable "frontend_storage_static_name" {
@@ -94,20 +94,20 @@ variable "frontend_storage_static_name" {
 }
 
 ########## Backend ##########
-# variable "artifact_repository_name" {
-#   description = "Nombre del repositorio de Artifact Registry"
-#   type        = string
-#   default     = "backend-repo"
-# }
+variable "artifact_repository_name" {
+  description = "Nombre del repositorio de Artifact Registry"
+  type        = string
+  default     = "backend-repo"
+}
 
-# variable "artifact_repository_description" {
-#   description = "Descripción del repositorio de Artifact Registry"
-#   type        = string
-#   default     = "Repositorio de Artifact Registry"
-# }
+variable "artifact_repository_description" {
+  description = "Descripción del repositorio de Artifact Registry"
+  type        = string
+  default     = "Repositorio de Artifact Registry"
+}
 
-# variable "artifact_repository_format" {
-#   description = "Formato del repositorio de Artifact Registry"
-#   type        = string
-#   default     = "DOCKER"
-# }
+variable "artifact_repository_format" {
+  description = "Formato del repositorio de Artifact Registry"
+  type        = string
+  default     = "DOCKER"
+}

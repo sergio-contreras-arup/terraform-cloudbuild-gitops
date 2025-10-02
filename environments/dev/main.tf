@@ -1,12 +1,12 @@
 ########## Base ##########
-# module "artifact_registry" {
-#   source = "../../modules/artifact_registry"
+module "artifact_registry" {
+  source = "../../modules/artifact_registry"
 
-#   region                 = var.region
-#   repository_name        = var.artifact_repository_name
-#   repository_description = var.artifact_repository_description
-#   repository_format      = var.artifact_repository_format
-# }
+  region                 = var.region
+  repository_name        = var.artifact_repository_name
+  repository_description = var.artifact_repository_description
+  repository_format      = var.artifact_repository_format
+}
 
 ########## CARTO ##########
 # module "cloudsql_postgres" {
@@ -27,12 +27,12 @@
 #   deletion_protection = var.deletion_protection
 # }
 
-# module "object_storage" {
-#   source = "../../modules/storage_objects"
+module "object_storage" {
+  source = "../../modules/storage_objects"
 
-#   bucket_name = var.carto_object_storage_name
-#   region      = var.region
-# }
+  bucket_name = var.carto_object_storage_name
+  region      = var.region
+}
 
 ########## Frontend ##########
 module "static_site" {
