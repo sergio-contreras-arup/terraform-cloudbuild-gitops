@@ -1,3 +1,10 @@
+terraform {
+  backend "gcs" {
+    bucket = "pgoum-des-terraform-state"
+    prefix = "terraform/state"
+  }
+}
+
 ########## Base ##########
 module "artifact_registry" {
   source = "../../modules/artifact_registry"
