@@ -103,6 +103,7 @@ variable "artifact_repository_name" {
 variable "artifact_repository_description" {
   description = "Descripción del repositorio de Artifact Registry"
   type        = string
+  default     = "Repositorio de Artifact Registry"
 }
 
 variable "artifact_repository_format" {
