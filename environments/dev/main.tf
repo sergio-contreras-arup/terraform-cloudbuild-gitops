@@ -1,3 +1,4 @@
+########## CARTO ##########
 module "cloudsql_postgres" {
   source = "../../modules/cloudsql_postgres"
 
@@ -16,9 +17,20 @@ module "cloudsql_postgres" {
   deletion_protection = var.deletion_protection
 }
 
-module "gcs_web_storage" {
-  source = "../../modules/cloud_storage"
+########## Frontend ##########
+module "static_site" {
+  source = "../../modules/storage_static_site"
 
-  bucket_name   = var.frontend_bucket_name
+  bucket_name   = var.frontend_storage_static_name
   region        = var.region
 }
+
+########## Backend ##########
+# module "artifact_registry" {
+#   source = "../../modules/artifact_registry"
+
+#   region                 = var.region
+#   repository_name        = var.artifact_repository_name
+#   repository_description = var.artifact_repository_description
+#   repository_format      = var.artifact_repository_format
+# }

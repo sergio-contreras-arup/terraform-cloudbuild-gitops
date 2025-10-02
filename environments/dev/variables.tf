@@ -1,3 +1,4 @@
+########## Configuración base ##########
 variable "project_id" {
   description = "ID del proyecto de GCP (p.ej., my-gcp-project)"
   type        = string
@@ -9,6 +10,7 @@ variable "region" {
   default     = "europe-west1"
 }
 
+########## CARTO ##########
 variable "instance_name" {
   description = "Nombre de la instancia de Cloud SQL"
   type        = string
@@ -78,8 +80,27 @@ variable "deletion_protection" {
   default     = false
 }
 
-variable "frontend_bucket_name" {
+########## Frontend ##########
+variable "frontend_storage_static_name" {
     description = "Nombre del bucket de GCS para la web estática"
     type        = string
     default     = "frontend"
+}
+
+########## Backend ##########
+variable "artifact_repository_name" {
+  description = "Nombre del repositorio de Artifact Registry"
+  type        = string
+  default     = "backend-repo"
+}
+
+variable "artifact_repository_description" {
+  description = "Descripción del repositorio de Artifact Registry"
+  type        = string
+}
+
+variable "artifact_repository_format" {
+  description = "Formato del repositorio de Artifact Registry"
+  type        = string
+  default     = "DOCKER"
 }

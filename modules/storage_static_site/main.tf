@@ -1,4 +1,4 @@
-resource "google_storage_bucket" "gcs" {
+resource "google_storage_bucket" "static_site_bucket" {
   location = var.region
   name     = var.bucket_name
 
@@ -8,7 +8,7 @@ resource "google_storage_bucket" "gcs" {
   }
 
   cors {
-    origin          = ["http://localhost:3000"]
+    origin          = var.cors_origins
     method          = ["GET", "HEAD"]
     response_header = ["*"]
     max_age_seconds = 3600
