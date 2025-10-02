@@ -6,14 +6,14 @@ terraform {
 }
 
 ########## Base ##########
-module "artifact_registry" {
-  source = "../../modules/artifact_registry"
+# module "artifact_registry" {
+#   source = "../../modules/artifact_registry"
 
-  region                 = var.region
-  repository_name        = var.artifact_repository_name
-  repository_description = var.artifact_repository_description
-  repository_format      = var.artifact_repository_format
-}
+#   region                 = var.region
+#   repository_name        = var.artifact_repository_name
+#   repository_description = var.artifact_repository_description
+#   repository_format      = var.artifact_repository_format
+# }
 
 module "apis" {
   source = "../../modules/apis"
@@ -39,36 +39,36 @@ module "apis" {
 #   deletion_protection = var.deletion_protection
 # }
 
-module "carto_vpc" {
-  source = "../../modules/vpc"
+# module "carto_vpc" {
+#   source = "../../modules/vpc"
 
-  vpc_name = var.carto_vpc_name
-}
+#   vpc_name = var.carto_vpc_name
+# }
 
-module "carto_subnet" {
-  source = "../../modules/subnet"
+# module "carto_subnet" {
+#   source = "../../modules/subnet"
 
-  subnet_name          = var.carto_subnet_name
-  subnet_ip_cidr_range = var.carto_subnet_ip_cidr_range
-  vpc_id               = module.vpc_carto.vpc_id
-  secondary_ip_ranges  = var.carto_secondary_ip_ranges
-}
+#   subnet_name          = var.carto_subnet_name
+#   subnet_ip_cidr_range = var.carto_subnet_ip_cidr_range
+#   vpc_id               = module.vpc_carto.vpc_id
+#   secondary_ip_ranges  = var.carto_secondary_ip_ranges
+# }
 
-module "carto_gke_cluster" {
-  source = "../../modules/gke"
+# module "carto_gke_cluster" {
+#   source = "../../modules/gke"
 
-  cluster_name = var.carto_gke_cluster_name
-  location     = var.region
-  vpc_link     = module.vpc_carto.vpc_id
-  subnet_link  = module.subnet_carto.subnet_id
-}
+#   cluster_name = var.carto_gke_cluster_name
+#   location     = var.region
+#   vpc_link     = module.vpc_carto.vpc_id
+#   subnet_link  = module.subnet_carto.subnet_id
+# }
 
-module "carto_object_storage" {
-  source = "../../modules/storage_objects"
+# module "carto_object_storage" {
+#   source = "../../modules/storage_objects"
 
-  bucket_name = var.carto_object_storage_name
-  region      = var.region
-}
+#   bucket_name = var.carto_object_storage_name
+#   region      = var.region
+# }
 
 ########## Frontend ##########
 module "static_site" {
