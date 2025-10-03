@@ -1,5 +1,5 @@
 terraform {
-  backend "terraform-backend" {
+  backend "gcs" {
     bucket = "madrid-pgoum-terraform"
     prefix = "state"
   }
