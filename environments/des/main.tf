@@ -67,6 +67,7 @@ module "gke_carto" {
   release_channel = var.gke_release_channel_carto
   vpc_link        = module.vpc_carto.vpc_link
   subnet_link     = module.subnet_carto.subnet_link
+  network        = module.vpc_carto.vpc_id
 
   depends_on = [module.apis, module.vpc_carto, module.subnet_carto]
 }

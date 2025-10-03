@@ -1,3 +1,4 @@
+
 resource "google_container_cluster" "gke_carto" {
   name     = var.cluster_name
   location = var.location
@@ -8,8 +9,8 @@ resource "google_container_cluster" "gke_carto" {
     channel = var.release_channel
   }
   
-  network = google_compute_network.vpc.self_link
-  subnetwork = google_compute_subnetwork.subnet.self_link
+  network    = var.vpc_link
+  subnetwork = var.subnet_link
   resource_labels = var.resource_labels
 
   deletion_protection = false
@@ -26,7 +27,6 @@ resource "google_container_cluster" "gke_carto" {
     master_ipv4_cidr_block  = var.master_ipv4_cidr_block
   }
 
-  depends_on = [google_project_service.container]
 }
 
 
@@ -34,7 +34,7 @@ resource "google_container_cluster" "gke_carto" {
 resource "google_compute_router" "nat_router" {
   name    = "gke-nat-router"
   region  = var.location
-  network = google_compute_network.vpc.id
+  network = var.vpc_link
 }
 
 resource "google_compute_router_nat" "nat" {
@@ -45,8 +45,8 @@ resource "google_compute_router_nat" "nat" {
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
   subnetwork {
-    name                    = google_compute_subnetwork.subnet.id
+    name                    = var.subnet_link
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
-  
+
 }
