@@ -1,4 +1,4 @@
-resource "google_storage_bucket" "static_site_bucket" {
+resource "google_storage_bucket" "storage_static_site_pgoum" {
   location = var.region
   name     = var.bucket_name
 

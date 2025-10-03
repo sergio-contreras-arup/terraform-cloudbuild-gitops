@@ -1,5 +1,4 @@
-
-resource "google_container_cluster" "gke_cluster" {
+resource "google_container_cluster" "gke_carto" {
   name     = var.cluster_name
   location = var.location
 

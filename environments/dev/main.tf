@@ -15,8 +15,8 @@ terraform {
 #   repository_format      = var.artifact_repository_format
 # }
 
-module "apis" {
-  source = "../../modules/apis"
+module "project" {
+  source = "../../modules/project"
   apis   = var.apis
 }
 

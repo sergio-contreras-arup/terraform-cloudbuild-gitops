@@ -1,4 +1,4 @@
-resource "google_compute_subnetwork" "private" {
+resource "google_compute_subnetwork" "subnet_carto" {
   name                     = var.subnet_name
   description              = var.subnet_description
   ip_cidr_range            = var.subnet_ip_cidr_range

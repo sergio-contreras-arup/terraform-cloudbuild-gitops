@@ -1,10 +1,4 @@
-resource "google_project_service" "sqladmin" {
-  project            = var.project_id
-  service            = "sqladmin.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_sql_database_instance" "postgres" {
+resource "google_sql_database_instance" "postgres_carto" {
   name                = var.instance_name
   database_version    = var.database_version
   region              = var.region
@@ -36,20 +30,20 @@ resource "google_sql_database_instance" "postgres" {
   depends_on = [google_project_service.sqladmin]
 }
 
-resource "google_sql_database" "app_db" {
+resource "google_sql_database" "app_db_carto" {
   name     = var.database_name
-  instance = google_sql_database_instance.postgres.name
+  instance = google_sql_database_instance.postgres_carto.name
 }
 
-resource "random_password" "app_user_pwd" {
+resource "random_password" "app_user_pwd_carto" {
   length  = 20
   special = true
 }
 
-resource "google_sql_user" "app_user" {
+resource "google_sql_user" "app_user_carto" {
   name     = var.user_name
-  instance = google_sql_database_instance.postgres.name
-  password = random_password.app_user_pwd.result
+  instance = google_sql_database_instance.postgres_carto.name
+  password = random_password.app_user_pwd_carto.result
 }
 
 
