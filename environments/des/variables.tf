@@ -167,11 +167,11 @@ variable "secondary_ip_ranges_carto" {
   default = {
     pods = {
       ip_cidr_range = "10.4.0.0/14"
-      range_name    = "pods"
+      range_name    = "pods-range"
     }
     services = {
       ip_cidr_range = "10.0.32.0/20"
-      range_name    = "services"
+      range_name    = "services-range"
     }
   }
 }
