@@ -27,7 +27,7 @@ resource "google_sql_database_instance" "postgres_carto" {
     }
   }
 
-  depends_on = [google_project_service.sqladmin]
+  depends_on = [google_project_service.apis]
 }
 
 resource "google_sql_database" "app_db_carto" {
