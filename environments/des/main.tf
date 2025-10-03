@@ -36,12 +36,16 @@ module "cloudsql_postgres_carto" {
   database_name       = var.cloudsql_database_name_carto
   user_name           = var.cloudsql_user_name_carto
   deletion_protection = var.cloudsql_deletion_protection_carto
+
+  depends_on = [module.apis]
 }
 
 module "vpc_carto" {
   source = "../../modules/networking/vpc-carto"
 
   vpc_name = var.vpc_name_carto
+
+  depends_on = [module.apis]
 }
 
 module "subnet_carto" {
@@ -50,6 +54,8 @@ module "subnet_carto" {
   subnet_name          = var.subnet_name_carto
   vpc_id               = module.vpc_carto.vpc_id
   subnet_ip_cidr_range = var.subnet_ip_cidr_range_carto
+
+  depends_on = [module.apis, module.vpc_carto]
 }
 
 module "gke_carto" {
@@ -60,6 +66,8 @@ module "gke_carto" {
   release_channel = var.gke_release_channel_carto
   vpc_link        = module.vpc_carto.vpc_link
   subnet_link     = module.subnet_carto.subnet_link
+
+  depends_on = [module.apis, module.vpc_carto, module.subnet_carto]
 }
 
 module "storage_bucket_carto" {
@@ -67,6 +75,8 @@ module "storage_bucket_carto" {
 
   bucket_name = var.storage_bucket_bucket_name_carto
   region      = var.region
+
+  depends_on = [module.apis]
 }
 
 ########## Frontend ##########
@@ -75,4 +85,6 @@ module "storage_bucket_pgoum_frontend" {
 
   bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
   region      = var.region
+
+  depends_on = [module.apis]
 }

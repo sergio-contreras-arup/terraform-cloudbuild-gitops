@@ -179,7 +179,7 @@ variable "secondary_ip_ranges_carto" {
 variable "storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = null
+  default     = "carto-bucket"
 }
 
 ########## Frontend ##########

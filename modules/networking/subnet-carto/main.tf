@@ -13,6 +13,4 @@ resource "google_compute_subnetwork" "subnet_carto" {
       ip_cidr_range = secondary_ip_range.value.ip_cidr_range
     }
   }
-
-  depends_on = [google_compute_network.vpc]
 }

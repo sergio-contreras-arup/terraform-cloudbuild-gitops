@@ -1,6 +1,6 @@
 output "instance_connection_name" {
   description = "Nombre de conexión (<PROJECT>:<REGION>:<INSTANCE>)"
-  value       = google_sql_database_instance.postgres_carto.instance_connection_name
+  value       = google_sql_database_instance.postgres_carto.master_instance_name
 }
 
 output "public_ip_address" {

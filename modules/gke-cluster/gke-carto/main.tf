@@ -12,6 +12,4 @@ resource "google_container_cluster" "gke_carto" {
   subnetwork = var.subnet_link
 
   deletion_protection = false
-
-  depends_on = [google_project_service.apis]
 }
