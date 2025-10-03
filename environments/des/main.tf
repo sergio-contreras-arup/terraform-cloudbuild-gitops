@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "madrid-pgoum-terraform-${var.environment}"
+    bucket = "madrid-pgoum-terraform-des"
     prefix = "state"
   }
 }
