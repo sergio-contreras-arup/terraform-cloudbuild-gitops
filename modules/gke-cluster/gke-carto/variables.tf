@@ -1,21 +1,15 @@
-variable "cluster_name" {
-  description = "Nombre del clúster de GKE"
+variable "project_id" {
+  description = "ID del proyecto de GCP"
   type        = string
 }
 
 variable "location" {
-  description = "Ubicación del clúster de GKE (región o zona)"
+  description = "Ubicación del clúster (región o zona). Para Autopilot usar región."
   type        = string
 }
 
-
-variable "vpc_link" {
-  description = "ID de la VPC donde se desplegará el clúster de GKE"
-  type        = string
-}
-
-variable "subnet_link" {
-  description = "ID de la subred donde se desplegará el clúster de GKE"
+variable "cluster_name" {
+  description = "Nombre del clúster de GKE"
   type        = string
 }
 

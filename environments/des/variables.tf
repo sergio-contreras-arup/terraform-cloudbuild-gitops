@@ -120,19 +120,20 @@ variable "cloudsql_deletion_protection_carto" {
 }
 
 # GKE
-variable "gke_cluster_name_carto" {
+# GKE
+variable "gke_cluster_name" {
   description = "Nombre del clúster GKE"
   type        = string
   default     = "dev-carto-gke"
 }
 
-variable "gke_location_carto" {
+variable "gke_location" {
   description = "Ubicación (región) para GKE Autopilot"
   type        = string
   default     = "europe-southwest1"
 }
 
-variable "gke_release_channel_carto" {
+variable "gke_release_channel" {
   description = "Canal de release del clúster: RAPID, REGULAR o STABLE"
   type        = string
   default     = "REGULAR"

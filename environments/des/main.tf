@@ -40,36 +40,17 @@ module "apis" {
 #   depends_on = [module.apis]
 # }
 
-module "vpc_carto" {
-  source = "../../modules/networking/vpc-carto"
-
-  vpc_name = var.vpc_name_carto
-
-  depends_on = [module.apis]
-}
-
-module "subnet_carto" {
-  source = "../../modules/networking/subnet-carto"
-
-  subnet_name          = var.subnet_name_carto
-  vpc_id               = module.vpc_carto.vpc_id
-  subnet_ip_cidr_range = var.subnet_ip_cidr_range_carto
-  secondary_ip_ranges = var.secondary_ip_ranges_carto
-  depends_on = [module.apis, module.vpc_carto]
-}
 
 
-module "gke_carto" {
-  source = "../../modules/gke-cluster/gke-carto"
 
-  location        = var.gke_location_carto
-  cluster_name    = var.gke_cluster_name_carto
-  release_channel = var.gke_release_channel_carto
-  vpc_link        = module.vpc_carto.vpc_link
-  subnet_link     = module.subnet_carto.subnet_link
-  network        = module.vpc_carto.vpc_id
+module "gke" {
+  source = "../../modules/gke"
 
-  depends_on = [module.apis, module.vpc_carto, module.subnet_carto]
+  project_id       = var.project_id
+  location         = var.gke_location
+  cluster_name     = var.gke_cluster_name
+  release_channel  = var.gke_release_channel
+  resource_labels  = { env = "dev-carto" }
 }
 
 module "storage_bucket_carto" {

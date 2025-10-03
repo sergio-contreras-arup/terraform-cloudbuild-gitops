@@ -1,5 +1,34 @@
+# VPC
+resource "google_compute_network" "vpc" {
+  name                    = "gke-vpc"
+  auto_create_subnetworks = false
+}
 
-resource "google_container_cluster" "gke_carto" {
+# Subnet with secondary ranges (required for VPC-native GKE)
+resource "google_compute_subnetwork" "subnet" {
+  name          = "gke-subnet-eu-west1"
+  ip_cidr_range = "10.0.0.0/20"
+  region        = var.location
+  network       = google_compute_network.vpc.id
+
+  secondary_ip_range {
+    range_name    = "pods-range"
+    ip_cidr_range = "10.4.0.0/14"
+  }
+
+  secondary_ip_range {
+    range_name    = "services-range"
+    ip_cidr_range = "10.0.32.0/20"
+  }
+}
+
+resource "google_project_service" "container" {
+  project            = var.project_id
+  service            = "container.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_container_cluster" "this" {
   name     = var.cluster_name
   location = var.location
 
@@ -8,13 +37,14 @@ resource "google_container_cluster" "gke_carto" {
   release_channel {
     channel = var.release_channel
   }
-  
-  network    = var.vpc_link
-  subnetwork = var.subnet_link
+
+  network = google_compute_network.vpc.self_link
+  subnetwork = google_compute_subnetwork.subnet.self_link
   resource_labels = var.resource_labels
 
   deletion_protection = false
-# VPC-native (IP aliasing) ranges for Pods and Services
+
+  # VPC-native (IP aliasing) ranges for Pods and Services
   ip_allocation_policy {
     cluster_secondary_range_name  = var.pods_secondary_range_name
     services_secondary_range_name = var.services_secondary_range_name
@@ -27,6 +57,7 @@ resource "google_container_cluster" "gke_carto" {
     master_ipv4_cidr_block  = var.master_ipv4_cidr_block
   }
 
+  depends_on = [google_project_service.container]
 }
 
 
@@ -34,7 +65,7 @@ resource "google_container_cluster" "gke_carto" {
 resource "google_compute_router" "nat_router" {
   name    = "gke-nat-router"
   region  = var.location
-  network = var.vpc_link
+  network = google_compute_network.vpc.id
 }
 
 resource "google_compute_router_nat" "nat" {
@@ -45,8 +76,7 @@ resource "google_compute_router_nat" "nat" {
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
   subnetwork {
-    name                    = var.subnet_link
+    name                    = google_compute_subnetwork.subnet.id
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
-
 }
