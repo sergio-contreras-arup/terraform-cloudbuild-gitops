@@ -120,11 +120,10 @@ variable "cloudsql_deletion_protection_carto" {
 }
 
 # GKE
-# GKE
 variable "gke_cluster_name" {
   description = "Nombre del clúster GKE"
   type        = string
-  default     = "dev-carto-gke"
+  default     = "dev-carto-gke1"
 }
 
 variable "gke_location" {
@@ -137,57 +136,6 @@ variable "gke_release_channel" {
   description = "Canal de release del clúster: RAPID, REGULAR o STABLE"
   type        = string
   default     = "REGULAR"
-}
-
-# VPC
-variable "vpc_name_carto" {
-  description = "Nombre de la VPC"
-  type        = string
-  default     = "carto-vpc"
-}
-
-#Subnet
-variable "subnet_name_carto" {
-  description = "Nombre de la subred para CARTO"
-  type        = string
-  default     = "carto-subnet"
-}
-
-variable "subnet_ip_cidr_range_carto" {
-  description = "Rango de IPs para la subred de CARTO"
-  type        = string
-  default     = "10.0.0.0/20"
-}
-
-variable "secondary_ip_ranges_carto" {
-  description = "Rangos de IPs secundarios para la subred de CARTO"
-  type = map(object({
-    ip_cidr_range = string
-    range_name    = string
-  }))
-  default = {
-    pods = {
-      ip_cidr_range = "10.4.0.0/14"
-      range_name    = "pods-range"
-    }
-    services = {
-      ip_cidr_range = "10.0.32.0/20"
-      range_name    = "services-range"
-    }
-  }
-}
-
-# Cloud NAT
-variable "cloud_nat_router_name_carto" {
-  description = "Nombre del Cloud Router para NAT"
-  type        = string
-  default     = "carto-router"
-}
- 
-variable "cloud_nat_name_carto" {
-  description = "Nombre del Cloud NAT"
-  type        = string
-  default     = "carto-nat"
 }
 
 # Storage bucket
