@@ -52,7 +52,7 @@ variable "artifact_repository_format_pgoum" {
 variable "cloudsql_instance_name_carto" {
   description = "Nombre de la instancia de Cloud SQL"
   type        = string
-  default     = "pg-main"
+  default     = "pg-carto"
 }
 
 variable "cloudsql_database_version_carto" {
@@ -179,7 +179,7 @@ variable "secondary_ip_ranges_carto" {
 variable "storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "carto-bucket"
+  default     = "carto-storage-bucket"
 }
 
 ########## Frontend ##########
