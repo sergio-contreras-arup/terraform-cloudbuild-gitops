@@ -154,7 +154,7 @@ variable "subnet_name_carto" {
 variable "subnet_ip_cidr_range_carto" {
   description = "Rango de IPs para la subred de CARTO"
   type        = string
-  default     = "10.0.1.0/20"
+  default     = "10.0.0.0/20"
 }
 
 variable "secondary_ip_ranges_carto" {
