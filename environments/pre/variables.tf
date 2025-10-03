@@ -162,8 +162,87 @@ variable "frontend_storage_static_name" {
 #   default     = "Repositorio de Artifact Registry"
 # }
 
-# variable "artifact_repository_format" {
-#   description = "Formato del repositorio de Artifact Registry"
-#   type        = string
-#   default     = "DOCKER"
-# }
+variable "disk_size" {
+  description = "Tamaño de disco en GB"
+  type        = number
+  default     = 10
+}
+
+variable "availability_type" {
+  description = "ZONAL (por defecto) o REGIONAL para alta disponibilidad"
+  type        = string
+  default     = "ZONAL"
+}
+
+variable "backup_enabled" {
+  description = "Activa copias de seguridad automáticas"
+  type        = bool
+  default     = true
+}
+
+variable "authorized_networks" {
+  description = "Lista de redes autorizadas para acceder por IP pública"
+  type = list(object({
+    name = string
+    cidr = string
+  }))
+  default = []
+}
+
+variable "database_name" {
+  description = "Nombre de la base de datos de aplicación"
+  type        = string
+  default     = "app_db"
+}
+
+variable "user_name" {
+  description = "Usuario de la aplicación"
+  type        = string
+  default     = "app_user"
+}
+
+variable "deletion_protection" {
+  description = "Evita borrado accidental de la instancia"
+  type        = bool
+  default     = false
+}
+
+# GKE
+variable "gke_cluster_name" {
+  description = "Nombre del clúster GKE"
+  type        = string
+  default     = "pre-gke"
+}
+
+variable "gke_location" {
+  description = "Ubicación (región) para GKE Autopilot"
+  type        = string
+  default     = "europe-southwest1"
+}
+
+variable "gke_release_channel" {
+  description = "Canal de release del clúster: RAPID, REGULAR o STABLE"
+  type        = string
+  default     = "REGULAR"
+}
+
+# Cloud Storage
+variable "gcs_bucket_name" {
+  description = "Nombre del bucket (si null, se deriva)"
+  type        = string
+  default     = null
+}
+
+variable "gcs_location" {
+  description = "Ubicación del bucket"
+  type        = string
+  default     = "EU"
+}
+
+variable "gcs_storage_class" {
+  description = "Clase de almacenamiento"
+  type        = string
+  default     = "STANDARD"
+}
+
+

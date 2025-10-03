@@ -18,10 +18,10 @@ steps:
       fi
 
       case "$TAG_NAME" in
-        dev-*) printf 'BRANCH_NAME=dev\n' > /workspace/.env; echo "Env=dev" ;;
+        des-*) printf 'BRANCH_NAME=des\n' > /workspace/.env; echo "Env=des" ;;
         pre-*) printf 'BRANCH_NAME=pre\n' > /workspace/.env; echo "Env=pre" ;;
         pro-*) printf 'BRANCH_NAME=pro\n' > /workspace/.env; echo "Env=pro" ;;
-        *)     echo "Prefijo no válido. Use dev-/pre-/pro-"; exit 1 ;;
+        *)     echo "Prefijo no válido. Use des-/pre-/pro-"; exit 1 ;;
       esac
       
 - id: 'tf init'
@@ -36,7 +36,7 @@ steps:
       if [ -d "environments/$$BRANCH_NAME/" ]; then
         echo ""
         echo "*************** TERRAFORM INIT ******************"
-        echo "******* At environment: $$BRANCH_NAME *******"
+        echo "******* Entorno: $$BRANCH_NAME *******"
         echo "************************************************"
         cd "environments/$$BRANCH_NAME"
         terraform init 
@@ -57,7 +57,7 @@ steps:
       if [ -d "environments/$$BRANCH_NAME/" ]; then
         echo ""
         echo "*************** TERRAFORM PLAN ******************"
-        echo "******* At environment: $$BRANCH_NAME *********"
+        echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"
         terraform plan 
@@ -79,13 +79,13 @@ steps:
       if [ -d "environments/$$BRANCH_NAME/" ]; then
         echo ""
         echo "*************** TERRAFORM APPLY ******************"
-        echo "******* At environment: $$BRANCH_NAME *********"
+        echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"     
         terraform apply -auto-approve
       else
         echo "***************************** SKIPPING APPLYING *******************************"
-        echo "Branch '$$BRANCH_NAME' does not represent an official environment."
+        echo "Branch '$$BRANCH_NAME' no es un entorno predefinido valido."
         echo "*******************************************************************************"
       fi
 # [END tf-apply]     
