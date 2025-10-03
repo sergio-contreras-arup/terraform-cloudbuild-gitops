@@ -1,6 +1,6 @@
 # Terraform Infrastructure Deployment
 
-Este repositorio contiene la infraestructura como código (IaC) definida con **Terraform**, organizada por entornos (`dev`, `pro`) y utilizando módulos reutilizables para definir los recursos compartidos entre ellos.
+Este repositorio contiene la infraestructura como código (IaC) definida con **Terraform**, organizada por entornos (`des`,`pre`, `pro`) y utilizando módulos reutilizables para definir los recursos compartidos entre ellos.
 
 ## Estructura del repositorio
 
