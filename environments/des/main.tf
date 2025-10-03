@@ -44,7 +44,7 @@ module "apis" {
 
 
 module "gke" {
-  source = "../../modules/gke"
+  source = "../../modules/gke-cluster/gke-carto"
 
   project_id       = var.project_id
   location         = var.gke_location
