@@ -9,6 +9,12 @@ variable "region" {
   default     = "europe-west1"
 }
 
+variable "environment" {
+  description = "Entorno de despliegue (p.ej., dev, des, prod)"
+  type        = string
+  default     = "des"
+}
+
 variable "apis" {
   description = "Lista de APIs de GCP a habilitar"
   type        = list(string)
@@ -180,5 +186,5 @@ variable "storage_bucket_bucket_name_carto" {
 variable "storage_bucket_bucket_name__pgoum_frontend" {
   description = "Nombre del bucket para frontend (si null, se deriva)"
   type        = string
-  default     = "pem-frontend"
+  default     = "pgoum-frontend"
 }
