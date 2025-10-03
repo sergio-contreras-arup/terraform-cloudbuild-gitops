@@ -11,6 +11,7 @@ variable "nat_name" {
 variable "region" {
   description = "Región donde se creará el Cloud NAT"
   type        = string
+  default = "europe-southwest1"
 }
  
 variable "vpc_id" {
@@ -33,7 +34,7 @@ variable "nat_ip_allocate_option" {
 variable "source_subnetwork_ip_ranges_to_nat" {
   description = "Cómo se traducen las IPs de las subredes. Valores posibles: ALL_SUBNETWORKS_ALL_IP_RANGES, ALL_SUBNETWORKS_ALL_PRIMARY_IP_RANGES, LIST_OF_SUBNETWORKS"
   type        = string
-  default     = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+  default     = "LIST_OF_SUBNETWORKS"
 }
  
 variable "log_config_enable" {
