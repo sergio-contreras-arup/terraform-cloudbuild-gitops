@@ -58,6 +58,17 @@ module "subnet_carto" {
   depends_on = [module.apis, module.vpc_carto]
 }
 
+module "cloud_nat_carto" {
+  source = "../../modules/networking/cloud-nat-carto"
+ 
+  router_name = var.cloud_nat_router_name_carto
+  nat_name    = var.cloud_nat_name_carto
+  region      = var.region
+  vpc_id      = module.vpc_carto.vpc_id
+ 
+  depends_on = [module.apis, module.vpc_carto]
+}
+
 module "gke_carto" {
   source = "../../modules/gke-cluster/gke-carto"
 
@@ -67,7 +78,7 @@ module "gke_carto" {
   vpc_link        = module.vpc_carto.vpc_link
   subnet_link     = module.subnet_carto.subnet_link
 
-  depends_on = [module.apis, module.vpc_carto, module.subnet_carto]
+  depends_on = [module.apis, module.vpc_carto, module.subnet_carto, module.cloud_nat_carto]
 }
 
 module "storage_bucket_carto" {

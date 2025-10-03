@@ -176,6 +176,19 @@ variable "secondary_ip_ranges_carto" {
   }
 }
 
+# Cloud NAT
+variable "cloud_nat_router_name_carto" {
+  description = "Nombre del Cloud Router para NAT"
+  type        = string
+  default     = "carto-router"
+}
+ 
+variable "cloud_nat_name_carto" {
+  description = "Nombre del Cloud NAT"
+  type        = string
+  default     = "carto-nat"
+}
+
 # Storage bucket
 variable "storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"

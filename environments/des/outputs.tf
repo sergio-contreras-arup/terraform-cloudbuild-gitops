@@ -43,3 +43,13 @@
 #   description = "URL del bucket de Cloud Storage"
 #   value       = module.cloud_storage.bucket_url
 # }
+
+output "cloud_nat_router_name" {
+  description = "Nombre del Cloud Router para NAT"
+  value       = module.cloud_nat_carto.router_name
+}
+ 
+output "cloud_nat_name" {
+  description = "Nombre del Cloud NAT"
+  value       = module.cloud_nat_carto.nat_name
+}
