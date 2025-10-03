@@ -123,7 +123,7 @@ variable "cloudsql_deletion_protection_carto" {
 variable "gke_cluster_name" {
   description = "Nombre del clúster GKE"
   type        = string
-  default     = "dev-carto-gke1"
+  default     = "dev-carto-gke"
 }
 
 variable "gke_location" {
