@@ -54,7 +54,7 @@ module "subnet_carto" {
   subnet_name          = var.subnet_name_carto
   vpc_id               = module.vpc_carto.vpc_id
   subnet_ip_cidr_range = var.subnet_ip_cidr_range_carto
-  secondary_ip_range = var.secondary_ip_ranges_carto
+  secondary_ip_ranges = var.secondary_ip_ranges_carto
   depends_on = [module.apis, module.vpc_carto]
 }
 
