@@ -26,6 +26,8 @@ variable "apis" {
     "cloudbuild.googleapis.com",
     "iam.googleapis.com",
     "sqladmin.googleapis.com",
+    "servicenetworking.googleapis.com", # Required for CloudSQL private networking
+    "secretmanager.googleapis.com",     # Required for storing DB passwords
     "storage.googleapis.com",
   ]
 }

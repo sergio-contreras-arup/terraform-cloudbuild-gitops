@@ -20,33 +20,14 @@ module "apis" {
 }
 
 ########## Carto ##########
-# module "cloudsql_postgres_carto" {
-#   source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
-
-#   project_id          = var.project_id
-#   region              = var.region
-#   instance_name       = var.cloudsql_instance_name_carto
-#   database_version    = var.cloudsql_database_version_carto
-#   tier                = var.cloudsql_tier_carto
-#   disk_type           = var.cloudsql_disk_type_carto
-#   disk_size           = var.cloudsql_disk_size_carto
-#   availability_type   = var.cloudsql_availability_type_carto
-#   backup_enabled      = var.cloudsql_backup_enabled_carto
-#   authorized_networks = var.cloudsql_authorized_networks_carto
-#   database_name       = var.cloudsql_database_name_carto
-#   user_name           = var.cloudsql_user_name_carto
-#   deletion_protection = var.cloudsql_deletion_protection_carto
-
-#   depends_on = [module.apis]
-# }
-
 # Networking resources for GKE
 module "vpc_carto" {
   source = "../../modules/networking/vpc-carto"
 
-  project_id             = var.project_id
-  vpc_name               = "gke-vpc"
-  auto_create_subnetworks = false
+  project_id                      = var.project_id
+  vpc_name                        = "gke-vpc"
+  auto_create_subnetworks         = false
+  enable_private_service_connection = true # Required for CloudSQL private networking
 }
 
 module "subnet_carto" {
@@ -87,6 +68,40 @@ module "cloud_nat_carto" {
       source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
     }
   ]
+}
+
+# CloudSQL PostgreSQL Instance
+module "cloudsql_postgres_carto" {
+  source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
+
+  project_id       = var.project_id
+  region           = var.region
+  instance_name    = "carto-des-environment"
+  database_version = "POSTGRES_15"
+  tier             = "db-custom-1-3840" # 1 vCPU, 3.75 GB RAM (mínimo 2GB)
+  disk_type        = "PD_SSD"
+  disk_size        = 20
+  availability_type = "ZONAL"
+  
+  # Database and user (using defaults: carto/carto)
+  database_name = "carto"
+  user_name     = "carto"
+  
+  # Security
+  deletion_protection = false # Set to true for production
+  require_ssl         = true
+  ipv4_enabled        = false
+  private_network     = module.vpc_carto.vpc_self_link
+  
+  # Backups
+  backup_enabled                     = true
+  point_in_time_recovery_enabled     = true
+  transaction_log_retention_days     = 7
+  
+  # Monitoring
+  query_insights_enabled = true
+  
+  depends_on = [module.apis, module.vpc_carto]
 }
 
 # GKE Cluster

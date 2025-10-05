@@ -13,3 +13,9 @@ variable "auto_create_subnetworks" {
   type        = bool
   default     = false
 }
+
+variable "enable_private_service_connection" {
+  description = "Habilitar Private Service Connection para CloudSQL y otros servicios de Google"
+  type        = bool
+  default     = false
+}

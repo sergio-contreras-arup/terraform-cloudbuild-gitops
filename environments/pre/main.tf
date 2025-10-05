@@ -20,9 +20,10 @@
 module "vpc_carto" {
   source = "../../modules/networking/vpc-carto"
 
-  project_id             = var.project_id
-  vpc_name               = "gke-vpc"
-  auto_create_subnetworks = false
+  project_id                      = var.project_id
+  vpc_name                        = "gke-vpc"
+  auto_create_subnetworks         = false
+  enable_private_service_connection = true # Required for CloudSQL private networking
 }
 
 module "subnet_carto" {
