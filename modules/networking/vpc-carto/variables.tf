@@ -1,24 +1,15 @@
+variable "project_id" {
+  description = "ID del proyecto de GCP"
+  type        = string
+}
+
 variable "vpc_name" {
-  description = "El nombre de la red VPC."
+  description = "Nombre de la VPC"
   type        = string
 }
 
-variable "vpc_description" {
-  description = "Una descripción de la red VPC."
-  type        = string
-  default     = ""
-}
-
-variable "routing_mode" {
-  description = "El modo de enrutamiento de red a utilizar. Los valores posibles son 'GLOBAL' y 'REGIONAL'."
-  type        = string
-  default     = "REGIONAL"
-}
-
-variable "enable_internet_access" {
-  description = "Indica si se debe habilitar el acceso a Internet para la VPC."
+variable "auto_create_subnetworks" {
+  description = "Si se deben crear subredes automáticamente"
   type        = bool
   default     = false
 }
-
-

@@ -16,15 +16,65 @@
 #   deletion_protection = var.deletion_protection
 # }
 
+# Networking resources for GKE
+module "vpc_carto" {
+  source = "../../modules/networking/vpc-carto"
+
+  project_id             = var.project_id
+  vpc_name               = "gke-vpc"
+  auto_create_subnetworks = false
+}
+
+module "subnet_carto" {
+  source = "../../modules/networking/subnet-carto"
+
+  project_id     = var.project_id
+  subnet_name    = "gke-subnet-eu-west1"
+  ip_cidr_range  = "10.0.0.0/20"
+  region         = var.gke_location
+  network_id     = module.vpc_carto.vpc_id
+
+  secondary_ip_ranges = [
+    {
+      range_name    = "pods-range"
+      ip_cidr_range = "10.4.0.0/14"
+    },
+    {
+      range_name    = "services-range"
+      ip_cidr_range = "10.0.32.0/20"
+    }
+  ]
+}
+
+module "cloud_nat_carto" {
+  source = "../../modules/networking/cloud-nat-carto"
+
+  project_id                         = var.project_id
+  router_name                        = "gke-nat-router"
+  nat_name                           = "gke-nat"
+  region                             = var.gke_location
+  network_id                         = module.vpc_carto.vpc_id
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+
+  subnetworks = [
+    {
+      name                    = module.subnet_carto.subnet_id
+      source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+    }
+  ]
+}
+
+# GKE Cluster
 module "gke" {
-  source = "../../modules/gke"
+  source = "../../modules/gke-cluster/gke-carto"
 
   project_id      = var.project_id
   location        = var.gke_location
   cluster_name    = var.gke_cluster_name
   release_channel = var.gke_release_channel
-  network         = null
-  subnetwork      = null
+  network         = module.vpc_carto.vpc_self_link
+  subnetwork      = module.subnet_carto.subnet_self_link
   resource_labels = { env = "pre" }
 }
 

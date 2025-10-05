@@ -1,36 +1,33 @@
+variable "project_id" {
+  description = "ID del proyecto de GCP"
+  type        = string
+}
+
 variable "subnet_name" {
-  description = "El nombre de la subred."
+  description = "Nombre de la subred"
   type        = string
 }
 
-variable "subnet_description" {
-  description = "Una descripción de la subred."
-  type        = string
-  default     = ""
-}
-
-variable "subnet_ip_cidr_range" {
-  description = "El rango IP CIDR de la subred."
+variable "ip_cidr_range" {
+  description = "Rango CIDR principal de la subred"
   type        = string
 }
 
-variable "vpc_id" {
-  description = "El ID de la red VPC donde se creará la subred."
+variable "region" {
+  description = "Región de la subred"
   type        = string
 }
 
-variable "private_ip_google_access" {
-  description = "Si se debe habilitar el acceso privado a Google para la subred."
-  type        = bool
-  default     = true
+variable "network_id" {
+  description = "ID de la VPC a la que pertenece la subred"
+  type        = string
 }
 
 variable "secondary_ip_ranges" {
-  description = "Mapeo de rangos IP secundarios para la subred. La clave es el nombre del rango secundario y el valor es un objeto que contiene ip_cidr_range y range_name."
-  type = map(object({
-    ip_cidr_range = string
+  description = "Rangos IP secundarios para la subred (ej: para Pods y Services de GKE)"
+  type = list(object({
     range_name    = string
+    ip_cidr_range = string
   }))
-  default = {}
+  default = []
 }
-

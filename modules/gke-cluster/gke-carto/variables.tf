@@ -24,15 +24,13 @@ variable "release_channel" {
 }
 
 variable "network" {
-  description = "VPC a usar para el clúster. Si es null, usa la por defecto."
+  description = "Self link de la VPC a usar para el clúster"
   type        = string
-  default     = null
 }
 
 variable "subnetwork" {
-  description = "Subred a usar para el clúster. Si es null, usa la por defecto."
+  description = "Self link de la subred a usar para el clúster"
   type        = string
-  default     = null
 }
 
 variable "resource_labels" {

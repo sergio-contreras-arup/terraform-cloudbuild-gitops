@@ -1,27 +1,3 @@
-# VPC
-resource "google_compute_network" "vpc" {
-  name                    = "gke-vpc"
-  auto_create_subnetworks = false
-}
-
-# Subnet with secondary ranges (required for VPC-native GKE)
-resource "google_compute_subnetwork" "subnet" {
-  name          = "gke-subnet-eu-west1"
-  ip_cidr_range = "10.0.0.0/20"
-  region        = var.location
-  network       = google_compute_network.vpc.id
-
-  secondary_ip_range {
-    range_name    = "pods-range"
-    ip_cidr_range = "10.4.0.0/14"
-  }
-
-  secondary_ip_range {
-    range_name    = "services-range"
-    ip_cidr_range = "10.0.32.0/20"
-  }
-}
-
 resource "google_project_service" "container" {
   project            = var.project_id
   service            = "container.googleapis.com"
@@ -38,8 +14,8 @@ resource "google_container_cluster" "this" {
     channel = var.release_channel
   }
 
-  network = google_compute_network.vpc.self_link
-  subnetwork = google_compute_subnetwork.subnet.self_link
+  network    = var.network
+  subnetwork = var.subnetwork
   resource_labels = var.resource_labels
 
   deletion_protection = false
@@ -58,25 +34,4 @@ resource "google_container_cluster" "this" {
   }
 
   depends_on = [google_project_service.container]
-}
-
-
-# Cloud NAT to provide outbound internet access for private nodes
-resource "google_compute_router" "nat_router" {
-  name    = "gke-nat-router"
-  region  = var.location
-  network = google_compute_network.vpc.id
-}
-
-resource "google_compute_router_nat" "nat" {
-  name                               = "gke-nat"
-  router                             = google_compute_router.nat_router.name
-  region                             = var.location
-  nat_ip_allocate_option             = "AUTO_ONLY"
-  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
-
-  subnetwork {
-    name                    = google_compute_subnetwork.subnet.id
-    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
-  }
 }
