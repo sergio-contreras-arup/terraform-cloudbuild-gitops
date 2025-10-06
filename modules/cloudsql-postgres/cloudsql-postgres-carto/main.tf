@@ -88,17 +88,6 @@ resource "google_sql_user" "user" {
   project  = var.project_id
 }
 
-# Secret Manager for storing database credentials (optional)
-resource "google_secret_manager_secret" "db_password" {
-  count     = var.store_password_in_secret_manager ? 1 : 0
-  secret_id = "${var.instance_name}-password"
-  project   = var.project_id
-
-  replication {
-    automatic = true
-  }
-}
-
 resource "google_secret_manager_secret_version" "db_password" {
   count       = var.store_password_in_secret_manager ? 1 : 0
   secret      = google_secret_manager_secret.db_password[0].id
