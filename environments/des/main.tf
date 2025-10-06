@@ -20,25 +20,25 @@ module "apis" {
 }
 
 ########## Carto ##########
-# module "cloudsql_postgres_carto" {
-#   source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
+module "cloudsql_postgres_carto" {
+  source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
 
-#   project_id          = var.project_id
-#   region              = var.region
-#   instance_name       = var.cloudsql_instance_name_carto
-#   database_version    = var.cloudsql_database_version_carto
-#   tier                = var.cloudsql_tier_carto
-#   disk_type           = var.cloudsql_disk_type_carto
-#   disk_size           = var.cloudsql_disk_size_carto
-#   availability_type   = var.cloudsql_availability_type_carto
-#   backup_enabled      = var.cloudsql_backup_enabled_carto
-#   authorized_networks = var.cloudsql_authorized_networks_carto
-#   database_name       = var.cloudsql_database_name_carto
-#   user_name           = var.cloudsql_user_name_carto
-#   deletion_protection = var.cloudsql_deletion_protection_carto
+  project_id          = var.project_id
+  region              = var.region
+  instance_name       = var.cloudsql_instance_name_carto
+  database_version    = var.cloudsql_database_version_carto
+  tier                = var.cloudsql_tier_carto
+  disk_type           = var.cloudsql_disk_type_carto
+  disk_size           = var.cloudsql_disk_size_carto
+  availability_type   = var.cloudsql_availability_type_carto
+  backup_enabled      = var.cloudsql_backup_enabled_carto
+  authorized_networks = var.cloudsql_authorized_networks_carto
+  database_name       = var.cloudsql_database_name_carto
+  user_name           = var.cloudsql_user_name_carto
+  deletion_protection = var.cloudsql_deletion_protection_carto
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
 
 # Networking resources for GKE
 module "vpc_carto" {
