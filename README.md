@@ -7,20 +7,14 @@ Este repositorio contiene la infraestructura como código (IaC) definida con **T
 ```
 .
 ├── environments
-│   ├── dev
+│   ├── des
 │   │   ├── main.tf
 │   │   ├── outputs.tf
 │   │   ├── providers.tf
 │   │   ├── terraform.tfvars
 │   │   ├── variables.tf
 │   │   └── versions.tf
-│   └── pro
-│       ├── main.tf
-│       ├── outputs.tf
-│       ├── providers.tf
-│       ├── terraform.tfvars
-│       ├── variables.tf
-│       └── versions.tf
+│   └── ...
 ├── modules
 │   └── cloudsql_postgres
 │       ├── main.tf
@@ -34,7 +28,7 @@ Este repositorio contiene la infraestructura como código (IaC) definida con **T
 ## Descripción general
 
 - **`modules/`**: Contiene los módulos reutilizables con los recursos compartidos entre diferentes entornos. Por ejemplo, el módulo `cloudsql_postgres` define una instancia de Cloud SQL PostgreSQL que puede ser usada tanto en `dev` como en `pro`.
-- **`environments/dev` y `environments/pro`**: Contienen la definición específica para cada entorno, como configuraciones, variables y recursos particulares.
+- **`environments/des` y `environments/{entorno}`**: Contienen la definición específica para cada entorno, como configuraciones, variables y recursos particulares.
 - **`cloudbuild.yaml`**: Define el pipeline de CI/CD con Google Cloud Build. Este archivo permite automatizar el despliegue de la infraestructura por entorno en GCP, ejecutando comandos como `terraform init`, `plan` y `apply` de forma controlada.
 
 ## Uso
@@ -55,7 +49,7 @@ Este repositorio incluye un pipeline de CI/CD definido en `cloudbuild.yaml` para
 
 ## Buenas prácticas implementadas
 
-- Separación clara entre entornos (`dev`, `pro`)
+- Separación clara entre entornos (`des`, `pre`, `pro`)
 - Uso de módulos reutilizables para recursos compartidos
 - Gestión explícita de versiones en `versions.tf`
 - Outputs definidos para facilitar integraciones con otros recursos o herramientas
