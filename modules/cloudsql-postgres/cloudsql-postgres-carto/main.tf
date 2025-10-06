@@ -35,14 +35,6 @@ resource "google_sql_database_instance" "postgres" {
       ipv4_enabled    = var.ipv4_enabled
       private_network = var.private_network
       require_ssl     = var.require_ssl
-
-      dynamic "authorized_networks" {
-        for_each = var.authorized_networks
-        content {
-          name  = authorized_networks.value.name
-          value = authorized_networks.value.value
-        }
-      }
     }
 
     maintenance_window {
@@ -86,6 +78,17 @@ resource "google_sql_user" "user" {
   instance = google_sql_database_instance.postgres.name
   password = var.user_password != null ? var.user_password : random_password.db_password.result
   project  = var.project_id
+}
+
+# Secret Manager for storing database credentials (optional)
+resource "google_secret_manager_secret" "db_password" {
+  count     = var.store_password_in_secret_manager ? 1 : 0
+  secret_id = "${var.instance_name}-password"
+  project   = var.project_id
+
+  replication {
+    auto {}
+  }
 }
 
 resource "google_secret_manager_secret_version" "db_password" {
