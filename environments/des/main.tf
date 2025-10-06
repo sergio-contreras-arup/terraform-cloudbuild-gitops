@@ -34,12 +34,12 @@ module "cloudsql_postgres_carto" {
   backup_enabled      = var.cloudsql_backup_enabled_carto
   authorized_networks = [
     {
-      range_name    = "pods-range"
-      ip_cidr_range = "10.4.0.0/14"
+      name    = "pods-range"
+      cidr = "10.4.0.0/14"
     },
     {
-      range_name    = "services-range"
-      ip_cidr_range = "10.0.32.0/20"
+      name    = "services-range"
+      cidr = "10.0.32.0/20"
     }
   ]
   database_name       = var.cloudsql_database_name_carto
