@@ -29,6 +29,7 @@ variable "apis" {
     "servicenetworking.googleapis.com", # Required for CloudSQL private networking
     "secretmanager.googleapis.com",     # Required for storing DB passwords
     "storage.googleapis.com",
+    "servicenetworking.googleapis.com",
   ]
 }
 
