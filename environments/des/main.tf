@@ -105,17 +105,17 @@ module "cloudsql_postgres_carto" {
 }
 
 # GKE Cluster
-# module "gke" {
-#   source = "../../modules/gke-cluster/gke-carto"
+module "gke" {
+  source = "../../modules/gke-cluster/gke-carto"
 
-#   project_id       = var.project_id
-#   location         = var.gke_location
-#   cluster_name     = var.gke_cluster_name
-#   release_channel  = var.gke_release_channel
-#   network          = module.vpc_carto.vpc_self_link
-#   subnetwork       = module.subnet_carto.subnet_self_link
-#   resource_labels  = { env = "dev-carto" }
-# }
+  project_id       = var.project_id
+  location         = var.gke_location
+  cluster_name     = var.gke_cluster_name
+  release_channel  = var.gke_release_channel
+  network          = module.vpc_carto.vpc_self_link
+  subnetwork       = module.subnet_carto.subnet_self_link
+  resource_labels  = { env = "dev-carto" }
+}
 
 module "storage_bucket_carto" {
   source = "../../modules/storage-bucket/storage-bucket-carto"
