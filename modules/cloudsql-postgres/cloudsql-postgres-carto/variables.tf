@@ -129,10 +129,10 @@ variable "authorized_networks" {
   description = "Solo válido si ipv4_enabled=true"
 }
 
-variable "require_ssl" {
-  description = "Requerir SSL para conexiones"
-  type        = bool
-  default     = true
+variable "ssl_mode" {
+  type        = string
+  default     = "ENCRYPTED_ONLY"
+  description = "Modo de SSL/TLS para Cloud SQL."
 }
 
 # Maintenance window
