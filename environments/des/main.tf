@@ -89,7 +89,7 @@ module "cloudsql_postgres_carto" {
 
   # Security
   deletion_protection = false # Set to true for production
-  ssl_mode         = true
+  require_ssl         = true
   ipv4_enabled        = false
   private_network     = module.vpc_carto.vpc_self_link
 

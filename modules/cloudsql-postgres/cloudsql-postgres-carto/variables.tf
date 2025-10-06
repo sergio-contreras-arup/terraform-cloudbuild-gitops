@@ -129,7 +129,7 @@ variable "authorized_networks" {
   description = "Solo válido si ipv4_enabled=true"
 }
 
-variable "ssl_mode" {
+variable "require_ssl" {
   description = "Requerir SSL para conexiones"
   type        = bool
   default     = true
