@@ -118,24 +118,29 @@ variable "ipv4_enabled" {
 }
 
 variable "private_network" {
-  description = "Self link de la VPC para conexión privada"
   type        = string
   default     = null
+  description = "Self link de la VPC para Private IP. Ej: google_compute_network.vpc.self_link"
+  validation {
+    condition     = var.ipv4_enabled || (var.private_network != null && length(var.private_network) > 0)
+    error_message = "Debes habilitar IPv4 pública (ipv4_enabled=true) o proporcionar private_network para Private IP."
+  }
+}
+
+variable "authorized_networks" {
+  type        = list(object({ name = string, value = string }))
+  default     = []
+  description = "Solo válido si ipv4_enabled=true"
+  validation {
+    condition     = var.ipv4_enabled || length(var.authorized_networks) == 0
+    error_message = "authorized_networks no puede usarse cuando ipv4_enabled=false."
+  }
 }
 
 variable "require_ssl" {
   description = "Requerir SSL para conexiones"
   type        = bool
   default     = true
-}
-
-variable "authorized_networks" {
-  description = "Lista de redes autorizadas para acceder a la instancia"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
 }
 
 # Maintenance window
