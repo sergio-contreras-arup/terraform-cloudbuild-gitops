@@ -32,7 +32,16 @@ module "cloudsql_postgres_carto" {
   disk_size           = var.cloudsql_disk_size_carto
   availability_type   = var.cloudsql_availability_type_carto
   backup_enabled      = var.cloudsql_backup_enabled_carto
-  authorized_networks = var.cloudsql_authorized_networks_carto
+  authorized_networks = [
+    {
+      range_name    = "pods-range"
+      ip_cidr_range = "10.4.0.0/14"
+    },
+    {
+      range_name    = "services-range"
+      ip_cidr_range = "10.0.32.0/20"
+    }
+  ]
   database_name       = var.cloudsql_database_name_carto
   user_name           = var.cloudsql_user_name_carto
   deletion_protection = var.cloudsql_deletion_protection_carto
