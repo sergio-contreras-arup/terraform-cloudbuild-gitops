@@ -2,6 +2,7 @@
 
 # Script to delete GCP resources in defined order
 
+gcloud storage buckets delete gs://pgoum-frontend gs://carto-storage-bucket/
 gcloud container clusters delete dev-carto-gke --zone europe-southwest1
 gcloud artifacts repositories delete backend-image-repository --location=europe-southwest1
 gcloud compute routers nats delete gke-nat --region=europe-southwest1 --router="gke-nat-router"
