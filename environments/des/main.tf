@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "madrid-pgoum-terraform-des"
+    bucket = "des-pgoum-terraform-state"
     prefix = "state"
   }
 }
@@ -89,7 +89,7 @@ module "cloudsql_postgres_carto" {
 
   # Security
   deletion_protection = false # Set to true for production
-  ssl_mode          = "ENCRYPTED_ONLY"
+  ssl_mode            = "ENCRYPTED_ONLY"
   ipv4_enabled        = false
   private_network     = module.vpc_carto.vpc_self_link
 
@@ -108,13 +108,13 @@ module "cloudsql_postgres_carto" {
 module "gke" {
   source = "../../modules/gke-cluster/gke-carto"
 
-  project_id       = var.project_id
-  location         = var.gke_location
-  cluster_name     = var.gke_cluster_name
-  release_channel  = var.gke_release_channel
-  network          = module.vpc_carto.vpc_self_link
-  subnetwork       = module.subnet_carto.subnet_self_link
-  resource_labels  = { env = "dev-carto" }
+  project_id      = var.project_id
+  location        = var.gke_location
+  cluster_name    = var.gke_cluster_name
+  release_channel = var.gke_release_channel
+  network         = module.vpc_carto.vpc_self_link
+  subnetwork      = module.subnet_carto.subnet_self_link
+  resource_labels = { env = "dev-carto" }
 }
 
 module "storage_bucket_carto" {
