@@ -143,21 +143,21 @@ module "gke" {
   resource_labels = { env = "dev-carto" }
 }
 
-# module "storage_bucket_carto" {
-#   source = "../../modules/storage-bucket/storage-bucket-carto"
+module "storage_bucket_carto" {
+  source = "../../modules/storage-bucket/storage-bucket-carto"
 
-#   bucket_name = var.storage_bucket_bucket_name_carto
-#   region      = var.region
+  bucket_name = var.storage_bucket_bucket_name_carto
+  region      = var.region
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
 
-# ########## Frontend ##########
-# module "storage_bucket_pgoum_frontend" {
-#   source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
+########## Frontend ##########
+module "storage_bucket_pgoum_frontend" {
+  source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
 
-#   bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
-#   region      = var.region
+  bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
+  region      = var.region
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
