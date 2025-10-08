@@ -1,38 +1,50 @@
-# output "instance_connection_name" {
-#   description = "Nombre de conexión (<PROJECT>:<REGION>:<INSTANCE>)"
-#   value       = module.cloudsql_postgres.instance_connection_name
-# }
+# CloudSQL Outputs
+output "cloudsql_instance_connection_name" {
+  description = "Connection name para Cloud SQL Proxy (usar en GKE)"
+  value       = module.cloudsql_postgres_carto.instance_connection_name
+}
 
-# output "public_ip_address" {
-#   description = "Dirección IP pública de la instancia (si fue habilitada)"
-#   value       = module.cloudsql_postgres.public_ip_address
-# }
+output "cloudsql_instance_ip_address" {
+  description = "Dirección IP privada de CloudSQL (para conexión directa desde GKE)"
+  value       = module.cloudsql_postgres_carto.instance_ip_address
+}
 
-# output "database_name" {
-#   description = "Nombre de la base de datos creada"
-#   value       = module.cloudsql_postgres.database_name
-# }
+output "cloudsql_database_name" {
+  description = "Nombre de la base de datos"
+  value       = module.cloudsql_postgres_carto.database_name
+}
 
-# output "user_name" {
-#   description = "Usuario de aplicación"
-#   value       = module.cloudsql_postgres.user_name
-# }
+output "cloudsql_user_name" {
+  description = "Usuario de la base de datos"
+  value       = module.cloudsql_postgres_carto.user_name
+}
 
-# output "user_password" {
-#   description = "Contraseña generada para el usuario (sensible)"
-#   value       = module.cloudsql_postgres.user_password
-#   sensitive   = true
-# }
+output "cloudsql_user_password" {
+  description = "Contraseña del usuario (sensible - almacenada en Secret Manager)"
+  value       = module.cloudsql_postgres_carto.user_password
+  sensitive   = true
+}
 
-# output "gke_cluster_name" {
-#   description = "Nombre del clúster GKE"
-#   value       = module.gke.cluster_name
-# }
+output "cloudsql_secret_manager_id" {
+  description = "ID del secret en Secret Manager con la contraseña"
+  value       = module.cloudsql_postgres_carto.secret_manager_secret_id
+}
 
-# output "gke_endpoint" {
-#   description = "Endpoint del clúster GKE"
-#   value       = module.gke.endpoint
-# }
+output "cloudsql_connection_string" {
+  description = "String de conexión (sin contraseña)"
+  value       = module.cloudsql_postgres_carto.connection_string
+}
+
+# GKE Outputs
+output "gke_cluster_name" {
+  description = "Nombre del clúster GKE"
+  value       = module.gke.cluster_name
+}
+
+output "gke_endpoint" {
+  description = "Endpoint del clúster GKE"
+  value       = module.gke.endpoint
+}
 
 # output "gcs_bucket_name" {
 #   description = "Nombre del bucket de Cloud Storage"
