@@ -11,7 +11,7 @@ data "google_compute_network" "default" {
 
 data "google_compute_subnetwork" "default" {
   name   = "default"
-  region = "europe-west1"
+  region = var.region
 }
 
 # module "artifact_registry_pgoum" {
