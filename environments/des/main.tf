@@ -60,24 +60,24 @@ module "apis" {
 #   ]
 # }
 
-module "cloud_nat_carto" {
-  source = "../../modules/networking/cloud-nat-carto"
+# module "cloud_nat_carto" {
+#   source = "../../modules/networking/cloud-nat-carto"
 
-  project_id                         = var.project_id
-  router_name                        = "gke-nat-router"
-  nat_name                           = "gke-nat"
-  region                             = var.gke_location
-  network_id                         = data.google_compute_network.default.self_link
-  nat_ip_allocate_option             = "AUTO_ONLY"
-  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+#   project_id                         = var.project_id
+#   router_name                        = "gke-nat-router"
+#   nat_name                           = "gke-nat"
+#   region                             = var.gke_location
+#   network_id                         = data.google_compute_network.default.self_link
+#   nat_ip_allocate_option             = "AUTO_ONLY"
+#   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
-  subnetworks = [
-    {
-      name                    = data.google_compute_subnetwork.default.self_link
-      source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
-    }
-  ]
-}
+#   subnetworks = [
+#     {
+#       name                    = data.google_compute_subnetwork.default.self_link
+#       source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+#     }
+#   ]
+# }
 
 # CloudSQL PostgreSQL Instance
 # module "cloudsql_postgres_carto" {
