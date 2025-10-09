@@ -22,8 +22,8 @@ resource "google_container_cluster" "this" {
 
   # VPC-native (IP aliasing) ranges for Pods and Services
   ip_allocation_policy {
-    cluster_ipv4_cidr_block  = "10.56.0.0/14"  # Para Pods
-    services_ipv4_cidr_block = "10.60.0.0/20"  # Para Servicios
+    cluster_ipv4_cidr_block  = "10.90.0.0/20"  # Para Pods
+    services_ipv4_cidr_block = "10.90.32.0/24"  # Para Servicios
   }
 
   # Private cluster to avoid public IPs on nodes

@@ -5,30 +5,37 @@
 #   }
 # }
 
-data "google_compute_network" "default" {
-  name = "default"
+############################
+# DATA: RED/SUBRED EN HOST
+############################
+data "google_compute_network" "shared" {
+  name    = var.shared_network_name
+  project = var.host_project_id
 }
 
-data "google_compute_subnetwork" "default" {
-  name   = "default"
-  region = var.region
+data "google_compute_subnetwork" "shared" {
+  name    = var.shared_subnet_name
+  region  = var.region                      # europe-southwest1
+  project = var.host_project_id
 }
 
-# Private IP allocation for CloudSQL in default VPC
+############################
+# SERVICE NETWORKING (EN HOST)
+############################
 resource "google_compute_global_address" "private_ip_alloc" {
   name          = "cloudsql-private-ip-alloc"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
-  network       = data.google_compute_network.default.id
-  project       = var.project_id
+  network       = data.google_compute_network.shared.id
+  project       = var.host_project_id
 }
 
-# Private VPC connection for CloudSQL
 resource "google_service_networking_connection" "private_vpc_connection" {
-  network                 = data.google_compute_network.default.id
+  network                 = data.google_compute_network.shared.id
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
+  project                 = var.host_project_id       
 }
 
 # module "artifact_registry_pgoum" {
@@ -96,7 +103,9 @@ module "apis" {
 #   ]
 # }
 
-# CloudSQL PostgreSQL Instance
+############################
+# CLOUD SQL 
+############################
 module "cloudsql_postgres_carto" {
   source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
 
@@ -117,14 +126,12 @@ module "cloudsql_postgres_carto" {
   deletion_protection = false # Set to true for production
   ssl_mode            = "ENCRYPTED_ONLY"
   ipv4_enabled        = false # Private IP only
-  private_network     = data.google_compute_network.default.self_link
+  private_network     = data.google_compute_network.shared.self_link
 
   # Backups
   backup_enabled                 = true
   point_in_time_recovery_enabled = true
   transaction_log_retention_days = 7
-
-  # Monitoring
   query_insights_enabled = true
 
   depends_on = [module.apis, google_service_networking_connection.private_vpc_connection]
@@ -138,26 +145,25 @@ module "gke" {
   location        = var.gke_location
   cluster_name    = var.gke_cluster_name
   release_channel = var.gke_release_channel
-  network         = data.google_compute_network.default.self_link
-  subnetwork      = data.google_compute_subnetwork.default.self_link
+  network         = data.google_compute_network.shared.self_link
+  subnetwork      = data.google_compute_subnetwork.shared.self_link
   resource_labels = { env = "dev-carto" }
 }
 
-module "storage_bucket_carto" {
-  source = "../../modules/storage-bucket/storage-bucket-carto"
+# module "storage_bucket_carto" {
+#   source = "../../modules/storage-bucket/storage-bucket-carto"
 
-  bucket_name = var.storage_bucket_bucket_name_carto
-  region      = var.region
+#   bucket_name = var.storage_bucket_bucket_name_carto
+#   region      = var.region
 
-  depends_on = [module.apis]
-}
+#   depends_on = [module.apis]
+# }
 
-########## Frontend ##########
-module "storage_bucket_pgoum_frontend" {
-  source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
+# module "storage_bucket_pgoum_frontend" {
+#   source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
 
-  bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
-  region      = var.region
+#   bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
+#   region      = var.region
 
-  depends_on = [module.apis]
-}
+#   depends_on = [module.apis]
+# }
