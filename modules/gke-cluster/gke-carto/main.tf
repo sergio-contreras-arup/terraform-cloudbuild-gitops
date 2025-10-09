@@ -24,7 +24,6 @@ resource "google_container_cluster" "this" {
   ip_allocation_policy {
     # cluster_ipv4_cidr_block  = "10.90.0.0/20"  # Para Pods
     # services_ipv4_cidr_block = "10.90.32.0/24"  # Para Servicios
-    use_ip_aliases                = true
     cluster_secondary_range_name  = "gke-pods"
     services_secondary_range_name = "gke-services"
   }
