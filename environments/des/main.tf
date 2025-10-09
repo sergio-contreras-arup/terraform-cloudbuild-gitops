@@ -34,8 +34,7 @@ resource "google_compute_global_address" "private_ip_alloc" {
 resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = data.google_compute_network.shared.id
   service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
-  project                 = var.host_project_id       
+  reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]      
 }
 
 # module "artifact_registry_pgoum" {
