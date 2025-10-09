@@ -133,7 +133,7 @@ module "cloudsql_postgres_carto" {
   transaction_log_retention_days = 7
   query_insights_enabled = true
 
-  depends_on = [module.apis, google_service_networking_connection.private_vpc_connection]
+  depends_on = [module.apis]
 }
 
 # GKE Cluster
