@@ -1,3 +1,6 @@
+############################
+# STORAGE TERRAFORM STATE
+############################
 # terraform {
 #   backend "gcs" {
 #     bucket = "des-pgoum-terraform-state"
@@ -18,25 +21,9 @@ data "google_compute_subnetwork" "shared" {
   region  = var.region                      # europe-southwest1
   project = var.host_project_id
 }
-
 ############################
-# SERVICE NETWORKING (EN HOST)
+# REGISTRY DE ARTEFACTOS (IMAGENES CONTENEDOR) 
 ############################
-resource "google_compute_global_address" "private_ip_alloc" {
-  name          = "cloudsql-private-ip-alloc"
-  purpose       = "VPC_PEERING"
-  address_type  = "INTERNAL"
-  prefix_length = 16
-  network       = data.google_compute_network.shared.id
-  project       = var.host_project_id
-}
-
-resource "google_service_networking_connection" "private_vpc_connection" {
-  network                 = data.google_compute_network.shared.id
-  service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]      
-}
-
 # module "artifact_registry_pgoum" {
 #   source = "../../modules/artifact-registry/artifact-registry-pgoum"
 
@@ -46,6 +33,9 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 #   repository_format      = var.artifact_repository_format_pgoum
 # }
 
+############################
+# APIS
+############################
 module "apis" {
   source = "../../modules/project"
   apis   = var.apis
@@ -105,38 +95,40 @@ module "apis" {
 ############################
 # CLOUD SQL 
 ############################
-module "cloudsql_postgres_carto" {
-  source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
+# module "cloudsql_postgres_carto" {
+#   source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
 
-  project_id        = var.project_id
-  region            = var.region
-  instance_name     = "carto-des-environment"
-  database_version  = "POSTGRES_15"
-  tier              = "db-custom-1-3840" # 1 vCPU, 3.75 GB RAM (mínimo 2GB)
-  disk_type         = "PD_SSD"
-  disk_size         = 20
-  availability_type = "ZONAL"
+#   project_id        = var.project_id
+#   region            = var.region
+#   instance_name     = "carto-des-environment"
+#   database_version  = "POSTGRES_15"
+#   tier              = "db-custom-1-3840" # 1 vCPU, 3.75 GB RAM (mínimo 2GB)
+#   disk_type         = "PD_SSD"
+#   disk_size         = 20
+#   availability_type = "ZONAL"
 
-  # Database and user (using defaults: carto/carto)
-  database_name = "carto"
-  user_name     = "carto"
+#   # Database and user (using defaults: carto/carto)
+#   database_name = "carto"
+#   user_name     = "carto"
 
-  # Security - Using default VPC for communication with GKE
-  deletion_protection = false # Set to true for production
-  ssl_mode            = "ENCRYPTED_ONLY"
-  ipv4_enabled        = false # Private IP only
-  private_network     = data.google_compute_network.shared.self_link
+#   # Security - Using default VPC for communication with GKE
+#   deletion_protection = false # Set to true for production
+#   ssl_mode            = "ENCRYPTED_ONLY"
+#   ipv4_enabled        = false # Private IP only
+#   private_network     = data.google_compute_network.shared.self_link
 
-  # Backups
-  backup_enabled                 = true
-  point_in_time_recovery_enabled = true
-  transaction_log_retention_days = 7
-  query_insights_enabled = true
+#   # Backups
+#   backup_enabled                 = true
+#   point_in_time_recovery_enabled = true
+#   transaction_log_retention_days = 7
+#   query_insights_enabled = true
 
-  depends_on = [module.apis]
-}
+#   depends_on = [module.apis]
+# }
 
-# GKE Cluster
+############################
+# GKE CLUSTER 
+############################
 module "gke" {
   source = "../../modules/gke-cluster/gke-carto"
 
@@ -149,6 +141,9 @@ module "gke" {
   resource_labels = { env = "dev-carto" }
 }
 
+############################
+# STORAGE BUCKET CARTO 
+############################
 # module "storage_bucket_carto" {
 #   source = "../../modules/storage-bucket/storage-bucket-carto"
 
@@ -157,7 +152,9 @@ module "gke" {
 
 #   depends_on = [module.apis]
 # }
-
+############################
+# STORAGE BUCKET FRONTEND SIMULADOR 
+############################
 # module "storage_bucket_pgoum_frontend" {
 #   source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
 
