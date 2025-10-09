@@ -155,6 +155,17 @@ variable "storage_bucket_bucket_name__pgoum_frontend" {
   default     = "pgoum-frontend"
 }
 
-variable "host_project_id"      { type = string default="prj-pro-hub-n0acos"}  # prj-pro-hub-n0acos
-variable "shared_network_name"  { type = string default="vpc-trust"}  # vpc-trust
-variable "shared_subnet_name"   { type = string default="snet-eusw1-pro-pgoum-auto-01"}  # snet-eusw1-pro-pgoum-auto-01
+variable "host_project_id" { 
+  type = string 
+  default="prj-pro-hub-n0acos"
+}  # prj-pro-hub-n0acos
+
+variable "shared_network_name" { 
+  type = string 
+  default="vpc-trust"
+}  # vpc-trust
+
+variable "shared_subnet_name" {
+  type = string 
+  default="snet-eusw1-pro-pgoum-auto-01"
+}  # snet-eusw1-pro-pgoum-auto-01
