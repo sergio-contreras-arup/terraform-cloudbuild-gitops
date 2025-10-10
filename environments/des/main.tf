@@ -84,7 +84,7 @@ module "cloudsql_postgres_carto" {
 module "psc_endpoint_cloudsql" {
   source = "../../modules/networking/psc-endpoint"
 
-  project_id         = var.host_project_id # Create in host project for Shared VPC
+  project_id         = var.project_id 
   endpoint_name      = "cloudsql-psc-endpoint"
   region             = var.region
   network_id         = data.google_compute_network.shared.id
