@@ -167,5 +167,5 @@ variable "shared_network_name" {
 
 variable "shared_subnet_name" {
   type = string 
-  default="snet-eusw1-pro-pgoum-auto-01"
+  default="snet-eusw1-des-pgoum-01"
 }  # snet-eusw1-pro-pgoum-auto-01
