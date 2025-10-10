@@ -1,12 +1,12 @@
 ############################
 # STORAGE TERRAFORM STATE
 ############################
-# terraform {
-#   backend "gcs" {
-#     bucket = "des-pgoum-terraform-state"
-#     prefix = "state"
-#   }
-# }
+terraform {
+  backend "gcs" {
+    bucket = "des-pgoum-terraform-state"
+    prefix = "state"
+  }
+}
 
 ############################
 # DATA: RED/SUBRED EN HOST
@@ -24,14 +24,14 @@ data "google_compute_subnetwork" "shared" {
 ############################
 # REGISTRY DE ARTEFACTOS (IMAGENES CONTENEDOR) 
 ############################
-# module "artifact_registry_pgoum" {
-#   source = "../../modules/artifact-registry/artifact-registry-pgoum"
+module "artifact_registry_pgoum" {
+  source = "../../modules/artifact-registry/artifact-registry-pgoum"
 
-#   region                 = var.region
-#   repository_name        = var.artifact_repository_name_pgoum
-#   repository_description = var.artifact_repository_description_pgoum
-#   repository_format      = var.artifact_repository_format_pgoum
-# }
+  region                 = var.region
+  repository_name        = var.artifact_repository_name_pgoum
+  repository_description = var.artifact_repository_description_pgoum
+  repository_format      = var.artifact_repository_format_pgoum
+}
 
 ############################
 # APIS
@@ -97,37 +97,37 @@ module "psc_endpoint_cloudsql" {
 ############################
 # GKE CLUSTER 
 ############################
-# module "gke" {
-#   source = "../../modules/gke-cluster/gke-carto"
+module "gke" {
+  source = "../../modules/gke-cluster/gke-carto"
 
-#   project_id      = var.project_id
-#   location        = var.gke_location
-#   cluster_name    = var.gke_cluster_name
-#   release_channel = var.gke_release_channel
-#   network         = data.google_compute_network.shared.self_link
-#   subnetwork      = data.google_compute_subnetwork.shared.self_link
-#   resource_labels = { env = "dev-carto" }
-# }
+  project_id      = var.project_id
+  location        = var.gke_location
+  cluster_name    = var.gke_cluster_name
+  release_channel = var.gke_release_channel
+  network         = data.google_compute_network.shared.self_link
+  subnetwork      = data.google_compute_subnetwork.shared.self_link
+  resource_labels = { env = "dev-carto" }
+}
 
 ############################
 # STORAGE BUCKET CARTO 
 ############################
-# module "storage_bucket_carto" {
-#   source = "../../modules/storage-bucket/storage-bucket-carto"
+module "storage_bucket_carto" {
+  source = "../../modules/storage-bucket/storage-bucket-carto"
 
-#   bucket_name = var.storage_bucket_bucket_name_carto
-#   region      = var.region
+  bucket_name = var.storage_bucket_bucket_name_carto
+  region      = var.region
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
 ############################
 # STORAGE BUCKET FRONTEND SIMULADOR 
 ############################
-# module "storage_bucket_pgoum_frontend" {
-#   source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
+module "storage_bucket_pgoum_frontend" {
+  source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
 
-#   bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
-#   region      = var.region
+  bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
+  region      = var.region
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
