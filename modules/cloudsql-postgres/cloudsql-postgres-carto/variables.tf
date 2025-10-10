@@ -112,27 +112,28 @@ variable "retained_backups" {
 
 # Network configuration
 variable "ipv4_enabled" {
-  description = "Habilitar IPv4 público"
+  description = "Habilitar IPv4 público (no recomendado con PSC)"
   type        = bool
   default     = false
-}
-
-variable "private_network" {
-  type        = string
-  default     = null
-  description = "Self link de la VPC para Private IP. Ej: google_compute_network.vpc.self_link"
-}
-
-variable "authorized_networks" {
-  type        = list(object({ name = string, value = string }))
-  default     = []
-  description = "Solo válido si ipv4_enabled=true"
 }
 
 variable "ssl_mode" {
   type        = string
   default     = "ENCRYPTED_ONLY"
   description = "Modo de SSL/TLS para Cloud SQL."
+}
+
+# Private Service Connect (PSC) configuration
+variable "psc_enabled" {
+  description = "Habilitar Private Service Connect (recomendado sobre PSA/Private IP)"
+  type        = bool
+  default     = true
+}
+
+variable "psc_allowed_consumer_projects" {
+  description = "Lista de project IDs permitidos para conectarse vía PSC"
+  type        = list(string)
+  default     = []
 }
 
 # Maintenance window
@@ -205,16 +206,10 @@ variable "user_name" {
 }
 
 variable "user_password" {
-  description = "Contraseña del usuario (si es null, se genera automáticamente)"
+  description = "Contraseña del usuario (si es null, se genera automáticamente). IMPORTANTE: Guardar en lugar seguro, no se almacena en Secret Manager."
   type        = string
   default     = null
   sensitive   = true
-}
-
-variable "store_password_in_secret_manager" {
-  description = "Almacenar la contraseña en Secret Manager"
-  type        = bool
-  default     = true
 }
 
 # Database flags

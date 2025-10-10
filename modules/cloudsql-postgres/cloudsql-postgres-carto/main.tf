@@ -32,9 +32,14 @@ resource "google_sql_database_instance" "postgres" {
     }
 
     ip_configuration {
-      ipv4_enabled    = var.ipv4_enabled
-      private_network = var.private_network
-      ssl_mode      = var.ssl_mode 
+      ipv4_enabled = var.ipv4_enabled
+      ssl_mode     = var.ssl_mode
+      
+      # Private Service Connect configuration
+      psc_config {
+        psc_enabled               = var.psc_enabled
+        allowed_consumer_projects = var.psc_allowed_consumer_projects
+      }
     }
 
     maintenance_window {
@@ -78,22 +83,5 @@ resource "google_sql_user" "user" {
   instance = google_sql_database_instance.postgres.name
   password = var.user_password != null ? var.user_password : random_password.db_password.result
   project  = var.project_id
-}
-
-# Secret Manager for storing database credentials (optional)
-resource "google_secret_manager_secret" "db_password" {
-  count     = var.store_password_in_secret_manager ? 1 : 0
-  secret_id = "${var.instance_name}-password"
-  project   = var.project_id
-
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret_version" "db_password" {
-  count       = var.store_password_in_secret_manager ? 1 : 0
-  secret      = google_secret_manager_secret.db_password[0].id
-  secret_data = google_sql_user.user.password
 }
 

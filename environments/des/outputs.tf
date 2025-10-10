@@ -1,12 +1,22 @@
-# CloudSQL Outputs
+# CloudSQL Outputs - Private Service Connect (PSC)
 output "cloudsql_instance_connection_name" {
-  description = "Connection name para Cloud SQL Proxy (usar en GKE)"
+  description = "Connection name para Cloud SQL Proxy"
   value       = module.cloudsql_postgres_carto.instance_connection_name
 }
 
-output "cloudsql_instance_ip_address" {
-  description = "Dirección IP privada de CloudSQL (para conexión directa desde GKE)"
-  value       = module.cloudsql_postgres_carto.instance_ip_address
+output "cloudsql_dns_name" {
+  description = "DNS name de CloudSQL (usar para conexión)"
+  value       = module.cloudsql_postgres_carto.dns_name
+}
+
+output "cloudsql_psc_endpoint_ip" {
+  description = "IP del PSC endpoint (usar desde GKE para conectar a CloudSQL)"
+  value       = module.psc_endpoint_cloudsql.psc_endpoint_ip
+}
+
+output "cloudsql_psc_service_attachment" {
+  description = "Service Attachment link de CloudSQL"
+  value       = module.cloudsql_postgres_carto.psc_service_attachment_link
 }
 
 output "cloudsql_database_name" {
@@ -20,19 +30,14 @@ output "cloudsql_user_name" {
 }
 
 output "cloudsql_user_password" {
-  description = "Contraseña del usuario (sensible - almacenada en Secret Manager)"
+  description = "Contraseña del usuario (IMPORTANTE: Guardar en lugar seguro, NO se almacena en Secret Manager)"
   value       = module.cloudsql_postgres_carto.user_password
   sensitive   = true
 }
 
-output "cloudsql_secret_manager_id" {
-  description = "ID del secret en Secret Manager con la contraseña"
-  value       = module.cloudsql_postgres_carto.secret_manager_secret_id
-}
-
 output "cloudsql_connection_string" {
-  description = "String de conexión (sin contraseña)"
-  value       = module.cloudsql_postgres_carto.connection_string
+  description = "String de conexión (sin contraseña) - Usar cloudsql_psc_endpoint_ip como host"
+  value       = "postgresql://${module.cloudsql_postgres_carto.user_name}@${module.psc_endpoint_cloudsql.psc_endpoint_ip}:5432/${module.cloudsql_postgres_carto.database_name}?sslmode=require"
 }
 
 # GKE Outputs

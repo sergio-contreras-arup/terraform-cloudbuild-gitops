@@ -42,7 +42,7 @@ module "apis" {
 }
 
 ############################
-# CLOUD SQL 
+# CLOUD SQL - PRIVATE SERVICE CONNECT (PSC)
 ############################
 module "cloudsql_postgres_carto" {
   source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
@@ -56,23 +56,42 @@ module "cloudsql_postgres_carto" {
   disk_size         = 20
   availability_type = "ZONAL"
 
-  # Database and user (using defaults: carto/carto)
+  # Database and user
   database_name = "carto"
   user_name     = "carto"
 
-  # Security - Using default VPC for communication with GKE
-  deletion_protection = false # Set to true for production
-  ssl_mode            = "ENCRYPTED_ONLY"
-  ipv4_enabled        = false # Private IP only
-  private_network     = data.google_compute_network.shared.self_link
+  # Security - Using Private Service Connect (PSC) instead of PSA
+  deletion_protection           = false # Set to true for production
+  ssl_mode                      = "ENCRYPTED_ONLY"
+  ipv4_enabled                  = false # No public IP
+  psc_enabled                   = true  # Enable Private Service Connect
+  psc_allowed_consumer_projects = [var.project_id, var.host_project_id] # Allow both service and host project
 
   # Backups
   backup_enabled                 = true
   point_in_time_recovery_enabled = true
   transaction_log_retention_days = 7
+  
+  # Monitoring
   query_insights_enabled = true
 
   depends_on = [module.apis]
+}
+
+############################
+# PSC ENDPOINT - CONECTA GKE CON CLOUDSQL
+############################
+module "psc_endpoint_cloudsql" {
+  source = "../../modules/networking/psc-endpoint"
+
+  project_id         = var.host_project_id # Create in host project for Shared VPC
+  endpoint_name      = "cloudsql-psc-endpoint"
+  region             = var.region
+  network_id         = data.google_compute_network.shared.id
+  subnetwork_id      = data.google_compute_subnetwork.shared.id
+  service_attachment = module.cloudsql_postgres_carto.psc_service_attachment_link
+
+  depends_on = [module.cloudsql_postgres_carto]
 }
 
 ############################

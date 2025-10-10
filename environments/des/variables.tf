@@ -20,16 +20,13 @@ variable "apis" {
   type        = list(string)
   default = [
     "cloudresourcemanager.googleapis.com",
-    "compute.googleapis.com",
+    "compute.googleapis.com",            # Required for PSC endpoints
     "container.googleapis.com",
     "artifactregistry.googleapis.com",
     "cloudbuild.googleapis.com",
     "iam.googleapis.com",
-    "sqladmin.googleapis.com",
-    "servicenetworking.googleapis.com", # Required for CloudSQL private networking
-    "secretmanager.googleapis.com",     # Required for storing DB passwords
+    "sqladmin.googleapis.com",           # Required for CloudSQL
     "storage.googleapis.com",
-    "servicenetworking.googleapis.com",
   ]
 }
 
