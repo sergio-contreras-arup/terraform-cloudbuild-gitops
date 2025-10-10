@@ -65,7 +65,7 @@ module "cloudsql_postgres_carto" {
   ssl_mode                      = "ENCRYPTED_ONLY"
   ipv4_enabled                  = false # No public IP
   psc_enabled                   = true  # Enable Private Service Connect
-  psc_allowed_consumer_projects = [var.project_id, var.host_project_id] # Allow both service and host project
+  psc_allowed_consumer_projects = [var.project_id] # Allow both service and host project
 
   # Backups
   backup_enabled                 = true
