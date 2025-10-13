@@ -14,7 +14,10 @@ module "cloudsql_postgres" {
   database_name       = var.database_name
   user_name           = var.user_name
   deletion_protection = var.deletion_protection
-  labels = { env = "${var.environment}-carto" }
+  labels = {
+    env      = var.environment
+    resource = "cloudsql-postgres-carto"
+  }
 }
 
 module "gcs_web_storage" {
@@ -22,5 +25,8 @@ module "gcs_web_storage" {
 
   bucket_name   = var.frontend_bucket_name
   region        = var.region
-  labels = { env = "${var.environment}-carto" }
+  labels = {
+    env      = var.environment
+    resource = "storage-bucket-frontend"
+  }
 }

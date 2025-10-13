@@ -31,7 +31,10 @@ module "artifact_registry_pgoum" {
   repository_name        = var.artifact_repository_name_pgoum
   repository_description = var.artifact_repository_description_pgoum
   repository_format      = var.artifact_repository_format_pgoum
-  labels = { env = "${var.environment}-registry-pgoum" }
+  labels = {
+    env      = var.environment
+    resource = "registry-pgoum"
+  }
 }
 
 ############################
@@ -76,7 +79,10 @@ module "cloudsql_postgres_carto" {
   # Monitoring
   query_insights_enabled = true
 
-  labels = { env = "${var.environment}-cloudsql-carto" }
+  labels = {
+    env      = var.environment
+    resource = "cloudsql-carto"
+  }
 
   depends_on = [module.apis]
 }
@@ -93,7 +99,10 @@ module "psc_endpoint_cloudsql" {
   network_id         = data.google_compute_network.shared.id
   subnetwork_id      = data.google_compute_subnetwork.shared.id
   service_attachment = module.cloudsql_postgres_carto.psc_service_attachment_link
-  labels = { env = "${var.environment}-psc-endpoint-carto" }
+  labels = {
+    env      = var.environment
+    resource = "psc-endpoint-carto"
+  }
 
   depends_on = [module.cloudsql_postgres_carto]
 }
@@ -110,7 +119,10 @@ module "gke" {
   release_channel = var.gke_release_channel
   network         = data.google_compute_network.shared.self_link
   subnetwork      = data.google_compute_subnetwork.shared.self_link
-  resource_labels = { env = "${var.environment}-gke-carto" }
+  resource_labels = {
+    env      = var.environment
+    resource = "gke-carto"
+  }
 }
 
 ############################
@@ -121,7 +133,10 @@ module "storage_bucket_carto" {
 
   bucket_name = var.storage_bucket_bucket_name_carto
   region      = var.region
-  labels = { env = "${var.environment}-storage-bucket-carto" }
+  labels = {
+    env      = var.environment
+    resource = "storage-bucket-carto"
+  }
 
   depends_on = [module.apis]
 }
@@ -133,7 +148,10 @@ module "storage_bucket_pgoum_frontend" {
 
   bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
   region      = var.region
-  labels = { env = "${var.environment}-storage-bucket-frontend-pgoum" }
+  labels = {
+    env      = var.environment
+    resource = "storage-bucket-frontend-pgoum"
+  }
 
   depends_on = [module.apis]
 }

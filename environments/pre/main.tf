@@ -24,7 +24,10 @@ module "vpc_carto" {
   vpc_name                        = "gke-vpc"
   auto_create_subnetworks         = false
   enable_private_service_connection = true # Required for CloudSQL private networking
-  labels = { env = "${var.environment}-carto" }
+  labels = {
+    env      = var.environment
+    resource = "vpc-carto"
+  }
 }
 
 module "subnet_carto" {
@@ -66,7 +69,10 @@ module "cloud_nat_carto" {
     }
   ]
   
-  labels = { env = "${var.environment}-carto" }
+  labels = {
+    env      = var.environment
+    resource = "cloud-nat-carto"
+  }
 }
 
 # GKE Cluster
@@ -79,7 +85,10 @@ module "gke" {
   release_channel = var.gke_release_channel
   network         = module.vpc_carto.vpc_self_link
   subnetwork      = module.subnet_carto.subnet_self_link
-  resource_labels = { env = "${var.environment}-carto" }
+  resource_labels = {
+    env      = var.environment
+    resource = "gke-carto"
+  }
 }
 
 # module "cloud_storage" {
