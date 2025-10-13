@@ -228,3 +228,9 @@ variable "additional_database_flags" {
   default = []
 }
 
+variable "labels" {
+  description = "Etiquetas para la instancia de Cloud SQL (ej: environment, resource-type)"
+  type        = map(string)
+  default     = {}
+}
+

@@ -55,3 +55,9 @@ variable "subnetworks" {
   }))
   default = []
 }
+
+variable "labels" {
+  description = "Etiquetas para el Cloud Router (ej: environment, resource-type)"
+  type        = map(string)
+  default     = {}
+}

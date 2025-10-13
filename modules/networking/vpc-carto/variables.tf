@@ -19,3 +19,9 @@ variable "enable_private_service_connection" {
   type        = bool
   default     = false
 }
+
+variable "labels" {
+  description = "Etiquetas para recursos de red (ej: environment, resource-type)"
+  type        = map(string)
+  default     = {}
+}

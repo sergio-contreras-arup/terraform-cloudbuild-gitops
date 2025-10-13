@@ -9,6 +9,12 @@ variable "region" {
   default     = "europe-west1"
 }
 
+variable "environment" {
+  description = "Entorno de despliegue (p.ej., dev, pre, pro)"
+  type        = string
+  default     = "pro"
+}
+
 variable "instance_name" {
   description = "Nombre de la instancia de Cloud SQL"
   type        = string

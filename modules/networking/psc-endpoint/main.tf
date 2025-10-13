@@ -17,5 +17,6 @@ resource "google_compute_forwarding_rule" "psc_endpoint" {
   network               = var.network_id
   ip_address            = google_compute_address.psc_endpoint_ip.id
   target                = var.service_attachment
+  labels                = var.labels
 }
 

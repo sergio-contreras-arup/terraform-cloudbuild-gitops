@@ -10,6 +10,12 @@ variable "region" {
   default     = "europe-west1"
 }
 
+variable "environment" {
+  description = "Entorno de despliegue (p.ej., dev, pre, pro)"
+  type        = string
+  default     = "pre"
+}
+
 variable "apis" {
   description = "Lista de APIs de GCP a habilitar"
   type        = list(string)

@@ -19,6 +19,7 @@ resource "google_sql_database_instance" "postgres" {
     disk_type         = var.disk_type
     disk_size         = var.disk_size
     disk_autoresize   = var.disk_autoresize
+    user_labels       = var.labels
 
     backup_configuration {
       enabled                        = var.backup_enabled

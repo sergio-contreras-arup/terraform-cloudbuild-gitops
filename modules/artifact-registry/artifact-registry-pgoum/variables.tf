@@ -19,3 +19,9 @@ variable "repository_format" {
   type        = string
   default     = "DOCKER"
 }
+
+variable "labels" {
+  description = "Etiquetas para el repositorio (ej: environment, resource-type)"
+  type        = map(string)
+  default     = {}
+}

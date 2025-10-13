@@ -13,3 +13,9 @@ variable "cors_origins" {
   type        = list(string)
   default     = ["http://localhost:3000"]
 }
+
+variable "labels" {
+  description = "Etiquetas para el bucket (ej: environment, resource-type)"
+  type        = map(string)
+  default     = {}
+}

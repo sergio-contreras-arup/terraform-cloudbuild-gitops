@@ -28,3 +28,9 @@ variable "service_attachment" {
   type        = string
 }
 
+variable "labels" {
+  description = "Etiquetas para el endpoint PSC (ej: environment, resource-type)"
+  type        = map(string)
+  default     = {}
+}
+

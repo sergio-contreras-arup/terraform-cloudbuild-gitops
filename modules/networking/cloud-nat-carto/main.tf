@@ -3,6 +3,10 @@ resource "google_compute_router" "nat_router" {
   region  = var.region
   network = var.network_id
   project = var.project_id
+  
+  bgp {
+    asn = 64514
+  }
 }
 
 resource "google_compute_router_nat" "nat" {
