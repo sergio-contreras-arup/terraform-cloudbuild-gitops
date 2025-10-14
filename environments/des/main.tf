@@ -3,7 +3,7 @@
 ############################
 terraform {
   backend "gcs" {
-    bucket = "des-pgoum-terraform-state"
+    bucket = " madrid-pgoum-terraform-des"
     prefix = "state"
   }
 }
@@ -18,7 +18,7 @@ data "google_compute_network" "shared" {
 
 data "google_compute_subnetwork" "shared" {
   name    = var.shared_subnet_name
-  region  = var.region                      # europe-southwest1
+  region  = var.region # europe-southwest1
   project = var.host_project_id
 }
 ############################
@@ -67,15 +67,15 @@ module "cloudsql_postgres_carto" {
   # Security - Using Private Service Connect (PSC) instead of PSA
   deletion_protection           = false # Set to true for production
   ssl_mode                      = "ENCRYPTED_ONLY"
-  ipv4_enabled                  = false # No public IP
-  psc_enabled                   = true  # Enable Private Service Connect
+  ipv4_enabled                  = false            # No public IP
+  psc_enabled                   = true             # Enable Private Service Connect
   psc_allowed_consumer_projects = [var.project_id] # Allow both service and host project
 
   # Backups
   backup_enabled                 = true
   point_in_time_recovery_enabled = true
   transaction_log_retention_days = 7
-  
+
   # Monitoring
   query_insights_enabled = true
 
@@ -93,7 +93,7 @@ module "cloudsql_postgres_carto" {
 module "psc_endpoint_cloudsql" {
   source = "../../modules/networking/psc-endpoint"
 
-  project_id         = var.project_id 
+  project_id         = var.project_id
   endpoint_name      = "cloudsql-psc-endpoint"
   region             = var.region
   network_id         = data.google_compute_network.shared.id
