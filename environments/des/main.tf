@@ -94,7 +94,7 @@ module "psc_endpoint_cloudsql" {
   source = "../../modules/networking/psc-endpoint"
 
   project_id         = var.project_id
-  endpoint_name      = "cloudsql-psc-endpoint"
+  endpoint_name      = "psc-eusw1-des-pgoum-carto-01"
   region             = var.region
   network_id         = data.google_compute_network.shared.id
   subnetwork_id      = data.google_compute_subnetwork.shared.id

@@ -33,7 +33,7 @@ variable "apis" {
 variable "artifact_repository_name_pgoum" {
   description = "Nombre del repositorio de Artifact Registry"
   type        = string
-  default     = "backend-image-repository"
+  default     = "art-eusw1-des-pgoum-repository-01"
 }
 
 variable "artifact_repository_description_pgoum" {
@@ -53,7 +53,7 @@ variable "artifact_repository_format_pgoum" {
 variable "cloudsql_instance_name_carto" {
   description = "Nombre de la instancia de Cloud SQL"
   type        = string
-  default     = "pg-carto"
+  default     = "sql-eusw1-des-pgoum-carto-01"
 }
 
 variable "cloudsql_database_version_carto" {
@@ -123,7 +123,7 @@ variable "cloudsql_deletion_protection_carto" {
 variable "gke_cluster_name" {
   description = "Nombre del clúster GKE"
   type        = string
-  default     = "dev-carto-gke"
+  default     = "gke-eusw1-des-pgoum-carto-01"
 }
 
 variable "gke_location" {
@@ -142,20 +142,20 @@ variable "gke_release_channel" {
 variable "import_storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "carto-import-storage-bucket"
+  default     = "bck-eusw1-des-pgoum-carto-01"
 }
 
 variable "thumbnails_storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "carto-thumbnails-storage-bucket"
+  default     = "bck-eusw1-des-pgoum-carto-02"
 }
 
 ########## Frontend ##########
 variable "storage_bucket_bucket_name__pgoum_frontend" {
   description = "Nombre del bucket para frontend (si null, se deriva)"
   type        = string
-  default     = "pgoum-frontend"
+  default     = "bck-eusw1-des-pgoum-frontend-01"
 }
 
 variable "host_project_id" {
