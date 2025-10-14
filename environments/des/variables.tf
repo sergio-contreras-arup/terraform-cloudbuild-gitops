@@ -20,12 +20,12 @@ variable "apis" {
   type        = list(string)
   default = [
     "cloudresourcemanager.googleapis.com",
-    "compute.googleapis.com",            # Required for PSC endpoints
+    "compute.googleapis.com", # Required for PSC endpoints
     "container.googleapis.com",
     "artifactregistry.googleapis.com",
     "cloudbuild.googleapis.com",
     "iam.googleapis.com",
-    "sqladmin.googleapis.com",           # Required for CloudSQL
+    "sqladmin.googleapis.com", # Required for CloudSQL
     "storage.googleapis.com",
   ]
 }
@@ -152,17 +152,18 @@ variable "storage_bucket_bucket_name__pgoum_frontend" {
   default     = "pgoum-frontend"
 }
 
-variable "host_project_id" { 
-  type = string 
-  default="prj-pro-hub-n0acos"
-}  # prj-pro-hub-n0acos
+variable "host_project_id" {
+  type    = string
+  default = "madrid-pgoum-des"
+  # default="prj-pro-hub-n0acos"
+} # prj-pro-hub-n0acos
 
-variable "shared_network_name" { 
-  type = string 
-  default="vpc-trust"
-}  # vpc-trust
+variable "shared_network_name" {
+  type    = string
+  default = "vpc-trust"
+} # vpc-trust
 
 variable "shared_subnet_name" {
-  type = string 
-  default="snet-eusw1-des-pgoum-01"
-}  # snet-eusw1-pro-pgoum-auto-01
+  type    = string
+  default = "snet-eusw1-des-pgoum-01"
+} # snet-eusw1-pro-pgoum-auto-01
