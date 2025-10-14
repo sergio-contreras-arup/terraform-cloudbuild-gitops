@@ -1,2 +1,2 @@
-project_id = "des-pgoum"
+project_id = "madrid-pgoum-des"
 region     = "europe-southwest1"
