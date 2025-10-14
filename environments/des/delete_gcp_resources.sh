@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Script to delete GCP resources in defined order
-gcloud -q storage buckets delete gs://pgoum-frontend gs://carto-import-storage-bucket/ gs://carto-thumbnails-storage-bucket/
-gcloud -q container clusters delete dev-carto-gke --zone europe-southwest1
-gcloud -q artifacts repositories delete backend-image-repository --location=europe-southwest1
-gcloud -q sql instances delete carto-des-environment
-gcloud -q compute forwarding-rules delete cloudsql-psc-endpoint --region=europe-southwest1
-gcloud -q compute addresses delete cloudsql-psc-endpoint-ip --region=europe-southwest1
+gcloud -q storage buckets delete gs://bck-eusw1-des-pgoum-frontend-01 gs://bck-eusw1-des-pgoum-carto-01/ gs://bck-eusw1-des-pgoum-carto-02/
+gcloud -q container clusters delete gke-eusw1-des-pgoum-carto-01 --zone europe-southwest1
+gcloud -q artifacts repositories delete art-eusw1-des-pgoum-repository-01 --location=europe-southwest1
+gcloud -q sql instances delete sql-eusw1-des-pgoum-carto-01
+gcloud -q compute forwarding-rules delete psc-eusw1-des-pgoum-carto-01 --region=europe-southwest1
+gcloud -q compute addresses delete psc-eusw1-des-pgoum-carto-01-ip --region=europe-southwest1
 
