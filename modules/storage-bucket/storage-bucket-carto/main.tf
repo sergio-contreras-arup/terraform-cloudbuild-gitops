@@ -8,4 +8,11 @@ resource "google_storage_bucket" "storage_carto" {
   versioning {
     enabled = true
   }
+
+  cors {
+    origin          = ["*"]
+    method          = ["GET", "POST", "PUT"]
+    max_age_seconds = 3600
+    response_header = ["Content-Type", "Content-MD5", "Content-Disposition", "Cache-Control", "x-goog-content-length-range", "x-goog-meta-filename"]
+  }
 }

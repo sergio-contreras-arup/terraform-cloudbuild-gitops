@@ -128,10 +128,23 @@ module "gke" {
 ############################
 # STORAGE BUCKET CARTO 
 ############################
-module "storage_bucket_carto" {
+module "import_storage_bucket_carto" {
   source = "../../modules/storage-bucket/storage-bucket-carto"
 
-  bucket_name = var.storage_bucket_bucket_name_carto
+  bucket_name = var.import_storage_bucket_bucket_name_carto
+  region      = var.region
+  labels = {
+    env      = var.environment
+    resource = "storage-bucket-carto"
+  }
+
+  depends_on = [module.apis]
+}
+
+module "thumbnails_storage_bucket_carto" {
+  source = "../../modules/storage-bucket/storage-bucket-carto"
+
+  bucket_name = var.thumbnails_storage_bucket_bucket_name_carto
   region      = var.region
   labels = {
     env      = var.environment

@@ -139,10 +139,16 @@ variable "gke_release_channel" {
 }
 
 # Storage bucket
-variable "storage_bucket_bucket_name_carto" {
+variable "import_storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "carto-storage-bucket"
+  default     = "carto-import-storage-bucket"
+}
+
+variable "thumbnails_storage_bucket_bucket_name_carto" {
+  description = "Nombre del bucket (si null, se deriva)"
+  type        = string
+  default     = "carto-thumbnails-storage-bucket"
 }
 
 ########## Frontend ##########
