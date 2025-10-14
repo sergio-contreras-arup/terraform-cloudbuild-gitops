@@ -53,7 +53,7 @@ module "cloudsql_postgres_carto" {
 
   project_id        = var.project_id
   region            = var.region
-  instance_name     = "carto-des-environment"
+  instance_name     = "sql-eusw1-des-pgoum-carto-01"
   database_version  = "POSTGRES_15"
   tier              = "db-custom-1-3840" # 1 vCPU, 3.75 GB RAM (mínimo 2GB)
   disk_type         = "PD_SSD"
