@@ -119,6 +119,19 @@ module "gke" {
   release_channel = var.gke_release_channel
   network         = data.google_compute_network.shared.self_link
   subnetwork      = data.google_compute_subnetwork.shared.self_link
+  
+  # Secondary IP ranges for pods and services
+  pods_secondary_range_name     = "snet2-eusw1-des-pgoum-pods"
+  services_secondary_range_name = "snet2-eusw1-des-pgoum-services"
+  
+  # Node pool configuration - Standard mode (not Autopilot)
+  node_count     = 3              # At least 3 nodes
+  machine_type   = "e2-standard-4" # 4 vCPUs, 16GB RAM (exceeds 3 vCPUs minimum)
+  disk_size_gb   = 100
+  disk_type      = "pd-standard"
+  min_node_count = 3
+  max_node_count = 10
+  
   resource_labels = {
     env      = var.environment
     resource = "gke-carto"
