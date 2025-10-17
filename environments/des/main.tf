@@ -61,8 +61,8 @@ module "cloudsql_postgres_carto" {
   availability_type = "ZONAL"
 
   # Database and user
-  database_name = "carto_worskpace"
-  user_name     = "carto_worskpace_admin"
+  database_name = "carto_workspace"
+  user_name     = "carto_workspace_admin"
 
   # Security - Using Private Service Connect (PSC) instead of PSA
   deletion_protection           = false # Set to true for production
