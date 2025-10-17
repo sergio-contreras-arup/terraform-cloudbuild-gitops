@@ -65,11 +65,12 @@ module "cloudsql_postgres_carto" {
   user_name     = "carto_workspace_admin"
 
   # Security - Using Private Service Connect (PSC) instead of PSA
-  deletion_protection           = false # Set to true for production
-  ssl_mode                      = "ENCRYPTED_ONLY"
-  ipv4_enabled                  = false            # No public IP
-  psc_enabled                   = true             # Enable Private Service Connect
-  psc_allowed_consumer_projects = [var.project_id] # Allow both service and host project
+  deletion_protection                            = false # Set to true for production
+  ssl_mode                                       = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+  ipv4_enabled                                   = false            # No public IP
+  psc_enabled                                    = true             # Enable Private Service Connect
+  psc_allowed_consumer_projects                  = [var.project_id] # Allow both service and host project
+  enable_private_path_for_google_cloud_services  = true             # Enable Private Path for Google Cloud services
 
   # Backups
   backup_enabled                 = true

@@ -33,8 +33,9 @@ resource "google_sql_database_instance" "postgres" {
     }
 
     ip_configuration {
-      ipv4_enabled = var.ipv4_enabled
-      ssl_mode     = var.ssl_mode
+      ipv4_enabled                                = var.ipv4_enabled
+      ssl_mode                                    = var.ssl_mode
+      enable_private_path_for_google_cloud_services = var.enable_private_path_for_google_cloud_services
 
       # Private Service Connect configuration
       psc_config {

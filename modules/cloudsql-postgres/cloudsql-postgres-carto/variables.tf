@@ -119,7 +119,7 @@ variable "ipv4_enabled" {
 
 variable "ssl_mode" {
   type        = string
-  default     = "ENCRYPTED_ONLY"
+  default     = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
   description = "Modo de SSL/TLS para Cloud SQL."
 }
 
@@ -134,6 +134,12 @@ variable "psc_allowed_consumer_projects" {
   description = "Lista de project IDs permitidos para conectarse vía PSC"
   type        = list(string)
   default     = []
+}
+
+variable "enable_private_path_for_google_cloud_services" {
+  description = "Habilitar Private Path para servicios de Google Cloud (recomendado para PSC)"
+  type        = bool
+  default     = true
 }
 
 # Maintenance window
