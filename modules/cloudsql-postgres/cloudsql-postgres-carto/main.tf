@@ -82,7 +82,7 @@ resource "google_sql_database" "database" {
 resource "google_sql_user" "user" {
   name     = var.user_name
   instance = google_sql_database_instance.postgres.name
-  password = var.user_password != null ? var.user_password : random_password.db_password.result
+  password = var.user_password != null ? var.user_password : 'Carto-2025'
   project  = var.project_id
 }
 
