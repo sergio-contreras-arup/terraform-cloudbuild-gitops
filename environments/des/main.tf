@@ -110,6 +110,22 @@ module "psc_endpoint_cloudsql" {
 ############################
 # GKE CLUSTER 
 ############################
+module "cloud_nat_carto" {
+  source = "../../modules/networking/cloud-nat-carto"
+
+  project_id  = var.project_id
+  router_name = "router-eusw1-des-pgoum-carto"
+  nat_name    = "nat-eusw1-des-pgoum-carto"
+  region      = var.region
+  network_id  = data.google_compute_network.shared.self_link
+
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+  subnetworks                        = []
+
+  depends_on = [module.apis]
+}
+
 module "gke" {
   source = "../../modules/gke-cluster/gke-carto"
 
@@ -123,6 +139,8 @@ module "gke" {
     env      = var.environment
     resource = "gke-carto"
   }
+
+  depends_on = [module.cloud_nat_carto]
 }
 
 ############################
