@@ -35,7 +35,7 @@ resource "google_sql_database_instance" "postgres" {
     ip_configuration {
       ipv4_enabled = var.ipv4_enabled
       ssl_mode     = var.ssl_mode
-      
+
       # Private Service Connect configuration
       psc_config {
         psc_enabled               = var.psc_enabled
@@ -82,7 +82,7 @@ resource "google_sql_database" "database" {
 resource "google_sql_user" "user" {
   name     = var.user_name
   instance = google_sql_database_instance.postgres.name
-  password = var.user_password != null ? var.user_password : 'Carto-2025'
+  password = var.user_password != null ? var.user_password : "Carto-2025"
   project  = var.project_id
 }
 
