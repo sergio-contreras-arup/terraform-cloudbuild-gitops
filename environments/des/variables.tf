@@ -160,7 +160,7 @@ variable "storage_bucket_bucket_name__pgoum_frontend" {
 
 variable "host_project_id" {
   type    = string
-  default = "madrid-pgoum-des"
+  default = "prj-pro-hub-n0acos"
   # default="prj-pro-hub-n0acos"
 } # prj-pro-hub-n0acos
 
