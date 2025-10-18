@@ -124,8 +124,6 @@ module "gke" {
     env      = var.environment
     resource = "gke-carto"
   }
-
-  depends_on = [module.cloud_nat_carto]
 }
 
 ############################
