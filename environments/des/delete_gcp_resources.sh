@@ -7,4 +7,6 @@ gcloud -q artifacts repositories delete art-eusw1-des-pgoum-repository-01 --loca
 gcloud -q sql instances delete sql-eusw1-des-pgoum-carto-01
 gcloud -q compute forwarding-rules delete psc-eusw1-des-pgoum-carto-01 --region=europe-southwest1
 gcloud -q compute addresses delete psc-eusw1-des-pgoum-carto-01-ip --region=europe-southwest1
+gcloud -q compute routers nats delete nat-eusw1-des-pgoum-carto --router=router-eusw1-des-pgoum-carto --region=europe-southwest1
+gcloud -q compute routers delete router-eusw1-des-pgoum-carto --region=europe-southwest1 
 
