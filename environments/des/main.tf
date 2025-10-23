@@ -160,18 +160,18 @@ module "import_storage_bucket_carto" {
   depends_on = [module.apis]
 }
 
-# module "thumbnails_storage_bucket_carto" {
-#   source = "../../modules/storage-bucket/storage-bucket-carto"
+module "thumbnails_storage_bucket_carto" {
+  source = "../../modules/storage-bucket/storage-bucket-carto"
 
-#   bucket_name = var.thumbnails_storage_bucket_bucket_name_carto
-#   region      = var.region
-#   labels = {
-#     env      = var.environment
-#     resource = "storage-bucket-carto"
-#   }
+  bucket_name = var.thumbnails_storage_bucket_bucket_name_carto
+  region      = var.region
+  labels = {
+    env      = var.environment
+    resource = "storage-bucket-carto"
+  }
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
 # ############################
 # # STORAGE BUCKET FRONTEND SIMULADOR 
 # ############################
