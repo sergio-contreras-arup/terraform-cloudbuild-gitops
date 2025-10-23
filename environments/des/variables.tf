@@ -142,13 +142,13 @@ variable "gke_release_channel" {
 variable "import_storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "bck-eusw1-des-pgoum-carto-01-test"
+  default     = "bck-eusw1-des-pgoum-carto-01"
 }
 
 variable "thumbnails_storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "bck-eusw1-des-pgoum-carto-02-test"
+  default     = "bck-eusw1-des-pgoum-carto-02"
 }
 
 ########## Frontend ##########

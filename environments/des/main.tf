@@ -3,7 +3,7 @@
 ############################
 terraform {
   backend "gcs" {
-    bucket = "madrid-pgoum-terraform-des"
+    bucket = "des-pgoum-terraform-state"
     prefix = "state"
   }
 }
@@ -45,104 +45,86 @@ module "apis" {
   apis   = var.apis
 }
 
-# ############################
-# # CLOUD SQL - PRIVATE SERVICE CONNECT (PSC)
-# ############################
-# module "cloudsql_postgres_carto" {
-#   source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
+############################
+# CLOUD SQL - PRIVATE SERVICE CONNECT (PSC)
+############################
+module "cloudsql_postgres_carto" {
+  source = "../../modules/cloudsql-postgres/cloudsql-postgres-carto"
 
-#   project_id        = var.project_id
-#   region            = var.region
-#   instance_name     = "sql-eusw1-des-pgoum-carto-01"
-#   database_version  = "POSTGRES_15"
-#   tier              = "db-custom-1-3840" # 1 vCPU, 3.75 GB RAM (mínimo 2GB)
-#   disk_type         = "PD_SSD"
-#   disk_size         = 20
-#   availability_type = "ZONAL"
+  project_id        = var.project_id
+  region            = var.region
+  instance_name     = "sql-eusw1-des-pgoum-carto-01"
+  database_version  = "POSTGRES_15"
+  tier              = "db-custom-1-3840" # 1 vCPU, 3.75 GB RAM (mínimo 2GB)
+  disk_type         = "PD_SSD"
+  disk_size         = 20
+  availability_type = "ZONAL"
 
-#   # Database and user
-#   database_name = "carto_workspace"
-#   user_name     = "carto_workspace_admin"
+  # Database and user
+  database_name = "carto_workspace"
+  user_name     = "carto_workspace_admin"
 
-#   # Security - Using Private Service Connect (PSC) instead of PSA
-#   deletion_protection                            = false # Set to true for production
-#   ssl_mode                                       = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
-#   ipv4_enabled                                   = false            # No public IP
-#   psc_enabled                                    = true             # Enable Private Service Connect
-#   psc_allowed_consumer_projects                  = [var.project_id] # Allow both service and host project
-#   enable_private_path_for_google_cloud_services  = true             # Enable Private Path for Google Cloud services
+  # Security - Using Private Service Connect (PSC) instead of PSA
+  deletion_protection                            = false # Set to true for production
+  ssl_mode                                       = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+  ipv4_enabled                                   = false            # No public IP
+  psc_enabled                                    = true             # Enable Private Service Connect
+  psc_allowed_consumer_projects                  = [var.project_id] # Allow both service and host project
+  enable_private_path_for_google_cloud_services  = true             # Enable Private Path for Google Cloud services
 
-#   # Backups
-#   backup_enabled                 = true
-#   point_in_time_recovery_enabled = true
-#   transaction_log_retention_days = 7
+  # Backups
+  backup_enabled                 = true
+  point_in_time_recovery_enabled = true
+  transaction_log_retention_days = 7
 
-#   # Monitoring
-#   query_insights_enabled = true
+  # Monitoring
+  query_insights_enabled = true
 
-#   labels = {
-#     env      = var.environment
-#     resource = "cloudsql-carto"
-#   }
+  labels = {
+    env      = var.environment
+    resource = "cloudsql-carto"
+  }
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
 
-# ############################
-# # PSC ENDPOINT - CONECTA GKE CON CLOUDSQL
-# ############################
-# module "psc_endpoint_cloudsql" {
-#   source = "../../modules/networking/psc-endpoint"
+############################
+# PSC ENDPOINT - CONECTA GKE CON CLOUDSQL
+############################
+module "psc_endpoint_cloudsql" {
+  source = "../../modules/networking/psc-endpoint"
 
-#   project_id         = var.project_id
-#   endpoint_name      = "psc-eusw1-des-pgoum-carto-01"
-#   region             = var.region
-#   network_id         = data.google_compute_network.shared.id
-#   subnetwork_id      = data.google_compute_subnetwork.shared.id
-#   service_attachment = module.cloudsql_postgres_carto.psc_service_attachment_link
-#   labels = {
-#     env      = var.environment
-#     resource = "psc-endpoint-carto"
-#   }
+  project_id         = var.project_id
+  endpoint_name      = "psc-eusw1-des-pgoum-carto-01"
+  region             = var.region
+  network_id         = data.google_compute_network.shared.id
+  subnetwork_id      = data.google_compute_subnetwork.shared.id
+  service_attachment = module.cloudsql_postgres_carto.psc_service_attachment_link
+  labels = {
+    env      = var.environment
+    resource = "psc-endpoint-carto"
+  }
 
-#   depends_on = [module.cloudsql_postgres_carto]
-# }
+  depends_on = [module.cloudsql_postgres_carto]
+}
 
-# ############################
-# # GKE CLUSTER 
-# ############################
-# module "cloud_nat_carto" {
-#   source = "../../modules/networking/cloud-nat-carto"
+############################
+# GKE CLUSTER 
+############################
+module "gke" {
+  source = "../../modules/gke-cluster/gke-carto"
 
-#   project_id  = var.project_id
-#   router_name = "router-eusw1-des-pgoum-carto"
-#   nat_name    = "nat-eusw1-des-pgoum-carto"
-#   region      = var.region
-#   network_id  = data.google_compute_network.shared.self_link
-
-#   nat_ip_allocate_option             = "AUTO_ONLY"
-#   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-#   subnetworks                        = []
-
-#   depends_on = [module.apis]
-# }
-
-# module "gke" {
-#   source = "../../modules/gke-cluster/gke-carto"
-
-#   project_id      = var.project_id
-#   location        = var.gke_location
-#   cluster_name    = var.gke_cluster_name
-#   release_channel = var.gke_release_channel
-#   network         = data.google_compute_network.shared.self_link
-#   subnetwork      = data.google_compute_subnetwork.shared.self_link
-#   resource_labels = {
-#     env      = var.environment
-#     resource = "gke-carto"
-#   }
-
-#   depends_on = [module.cloud_nat_carto]
-# }
+  project_id      = var.project_id
+  location        = var.gke_location
+  cluster_name    = var.gke_cluster_name
+  release_channel = var.gke_release_channel
+  network         = data.google_compute_network.shared.self_link
+  subnetwork      = data.google_compute_subnetwork.shared.self_link
+  resource_labels = {
+    env      = var.environment
+    resource = "gke-carto"
+  }
+}
 
 ############################
 # STORAGE BUCKET CARTO 
@@ -172,18 +154,18 @@ module "thumbnails_storage_bucket_carto" {
 
   depends_on = [module.apis]
 }
-# ############################
-# # STORAGE BUCKET FRONTEND SIMULADOR 
-# ############################
-# module "storage_bucket_pgoum_frontend" {
-#   source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
+############################
+# STORAGE BUCKET FRONTEND SIMULADOR 
+############################
+module "storage_bucket_pgoum_frontend" {
+  source = "../../modules/storage-bucket/storage-bucket-pgoum-frontend"
 
-#   bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
-#   region      = var.region
-#   labels = {
-#     env      = var.environment
-#     resource = "storage-bucket-frontend-pgoum"
-#   }
+  bucket_name = var.storage_bucket_bucket_name__pgoum_frontend
+  region      = var.region
+  labels = {
+    env      = var.environment
+    resource = "storage-bucket-frontend-pgoum"
+  }
 
-#   depends_on = [module.apis]
-# }
+  depends_on = [module.apis]
+}
