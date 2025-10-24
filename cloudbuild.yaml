@@ -57,7 +57,6 @@ steps:
         echo "*************** TERRAFORM INIT ******************"
         echo "******* Entorno: $$BRANCH_NAME *******"
         echo "************************************************"
-        cd "environments/$$BRANCH_NAME"
         terraform init 
       else
         echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
@@ -77,7 +76,6 @@ steps:
         echo "*************** TERRAFORM PLAN ******************"
         echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
-        cd "environments/$$BRANCH_NAME"
         terraform plan 
       else
         echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
@@ -97,8 +95,7 @@ steps:
         echo ""
         echo "*************** TERRAFORM APPLY ******************"
         echo "******* Entorno: $$BRANCH_NAME *********"
-        echo "*************************************************"
-        cd "environments/$$BRANCH_NAME"     
+        echo "*************************************************"     
         terraform apply -auto-approve
       else
         echo "***************************** SKIPPING APPLYING *******************************"
