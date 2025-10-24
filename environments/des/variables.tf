@@ -173,3 +173,17 @@ variable "shared_subnet_name" {
   type    = string
   default = "snet-eusw1-des-pgoum-01"
 } # snet-eusw1-pro-pgoum-auto-01
+
+########## CLOUD RUN SERVICE PGOUM ##########
+variable "cloud_run_service_name_pgoum" {
+  description = "Nombre del servicio Cloud Run"
+  type        = string
+  default     = "cr-eusw1-des-pgoum"
+}
+
+variable "cloud_run_image_name_pgoum" {
+  description = "Nombre de la imagen en Artifact Registry"
+  type        = string
+  default     = "pgoum-api"
+}
+

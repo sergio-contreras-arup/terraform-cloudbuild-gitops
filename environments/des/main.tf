@@ -65,12 +65,12 @@ module "cloudsql_postgres_carto" {
   user_name     = "carto_workspace_admin"
 
   # Security - Using Private Service Connect (PSC) instead of PSA
-  deletion_protection                            = false # Set to true for production
-  ssl_mode                                       = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
-  ipv4_enabled                                   = false            # No public IP
-  psc_enabled                                    = true             # Enable Private Service Connect
-  psc_allowed_consumer_projects                  = [var.project_id] # Allow both service and host project
-  enable_private_path_for_google_cloud_services  = true             # Enable Private Path for Google Cloud services
+  deletion_protection                           = false # Set to true for production
+  ssl_mode                                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+  ipv4_enabled                                  = false            # No public IP
+  psc_enabled                                   = true             # Enable Private Service Connect
+  psc_allowed_consumer_projects                 = [var.project_id] # Allow both service and host project
+  enable_private_path_for_google_cloud_services = true             # Enable Private Path for Google Cloud services
 
   # Backups
   backup_enabled                 = true
@@ -168,4 +168,25 @@ module "storage_bucket_pgoum_frontend" {
   }
 
   depends_on = [module.apis]
+}
+############################
+# CLOUD RUN SERVICE PGOUM
+############################
+module "cloud_run_service_pgoum" {
+  source = "../../modules/compute/cloud-run-pgoum"
+
+  service_name        = var.cloud_run_service_name_pgoum
+  region              = var.region
+  project_id          = var.project_id
+  repository          = var.artifact_repository_name_pgoum
+  image               = var.cloud_run_image_name_pgoum
+  shared_network_name = var.shared_network_name
+  shared_subnet_name  = var.shared_subnet_name
+
+  labels = {
+    env      = var.environment
+    resource = "cloud-run-pgoum"
+  }
+
+  depends_on = [module.apis, module.artifact_registry_pgoum]
 }
