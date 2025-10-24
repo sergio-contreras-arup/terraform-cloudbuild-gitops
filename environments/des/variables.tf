@@ -147,20 +147,20 @@ variable "gke_release_channel" {
 variable "import_storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "bck-eusw1-des-pgoum-carto-01"
+  default     = "bck-eusw1-madrid-pgoum-des-carto-01"
 }
 
 variable "thumbnails_storage_bucket_bucket_name_carto" {
   description = "Nombre del bucket (si null, se deriva)"
   type        = string
-  default     = "bck-eusw1-des-pgoum-carto-02"
+  default     = "bck-eusw1-madrid-pgoum-des-carto-02"
 }
 
 ########## Frontend ##########
 variable "storage_bucket_bucket_name__pgoum_frontend" {
   description = "Nombre del bucket para frontend (si null, se deriva)"
   type        = string
-  default     = "bck-eusw1-des-pgoum-frontend-01"
+  default     = "bck-eusw1-madrid-pgoum-des-frontend-01"
 }
 
 variable "host_project_id" {
