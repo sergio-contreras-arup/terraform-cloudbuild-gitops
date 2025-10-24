@@ -23,6 +23,25 @@ steps:
         pro-*) printf 'BRANCH_NAME=pro\n' > /workspace/.env; echo "Env=pro" ;;
         *)     echo "Prefijo no válido. Use des-/pre-/pro-"; exit 1 ;;
       esac
+
+- id: 'Navigate to folder'
+  name: 'alpine'
+  entrypoint: 'sh'  
+  args: 
+  - '-c'
+  - | 
+      set -eu
+      . /workspace/.env 2>/dev/null || true
+      if [ -d "environments/$$BRANCH_NAME/" ]; then
+        echo ""
+        echo "*************** NAVIGATE TO FOLDER ******************"
+        echo "******* Entorno: $$BRANCH_NAME *******"
+        echo "************************************************"
+        cd "environments/$$BRANCH_NAME"
+        pwd
+      else
+        echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
+      fi
       
 - id: 'tf init'
   name: 'hashicorp/terraform:1.5.0'
@@ -40,7 +59,6 @@ steps:
         echo "************************************************"
         cd "environments/$$BRANCH_NAME"
         terraform init 
-        cd ../../
       else
         echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
       fi 
@@ -61,7 +79,6 @@ steps:
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"
         terraform plan 
-        cd ../../
       else
         echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
       fi 
