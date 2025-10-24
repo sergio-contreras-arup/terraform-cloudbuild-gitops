@@ -9,6 +9,11 @@ variable "region" {
   default     = "europe-west1"
 }
 
+variable "tf_backend_bucket" {
+  description = "Nombre del bucket de backend de Terraform"
+  type        = string
+}
+
 variable "environment" {
   description = "Entorno de despliegue (p.ej., dev, des, prod)"
   type        = string
