@@ -3,7 +3,7 @@
 ############################
 terraform {
   backend "gcs" {
-    bucket = var.tf_backend_bucket
+    bucket = "madrid-pgoum-terraform-des"
     prefix = "state"
   }
 }
