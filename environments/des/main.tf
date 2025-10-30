@@ -126,6 +126,30 @@ module "gke" {
   }
 }
 
+module "cloud_nat_carto" {
+  source = "../../modules/networking/cloud-nat-carto"
+
+  project_id                         = var.project_id
+  router_name                        = "gke-nat-router"
+  nat_name                           = "gke-nat"
+  region                             = var.gke_location
+  network_id                         = module.vpc_carto.vpc_id
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+
+  subnetworks = [
+    {
+      name                    = module.subnet_carto.subnet_id
+      source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+    }
+  ]
+
+  labels = {
+    env      = var.environment
+    resource = "cloud-nat-carto"
+  }
+}
+
 ############################
 # STORAGE BUCKET CARTO 
 ############################
