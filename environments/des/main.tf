@@ -182,7 +182,7 @@ module "cloud_run_service_pgoum" {
   repository            = var.artifact_repository_name_pgoum
   image                 = var.cloud_run_image_name_pgoum
   shared_network_name   = data.google_compute_network.shared.id
-  shared_subnet_name    = data.google_compute_subnetwork.shared.name
+  shared_subnet_name    = data.google_compute_subnetwork.shared.id
   service_account_email = var.service_account_email
 
   labels = {
