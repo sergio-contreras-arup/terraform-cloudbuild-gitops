@@ -12,8 +12,8 @@ resource "google_cloud_run_v2_service" "default" {
 
     vpc_access {
       network_interfaces {
-        network    = var.shared_network_name
-        subnetwork = var.shared_subnet_name
+        network    = var.shared_network_id
+        subnetwork = var.shared_subnet_id
       }
     }
   }
