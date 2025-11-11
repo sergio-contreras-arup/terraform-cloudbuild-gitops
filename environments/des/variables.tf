@@ -15,6 +15,12 @@ variable "environment" {
   default     = "des"
 }
 
+variable "service_account_email" {
+  description = "Correo electrónico de la cuenta de servicio para Cloud Run"
+  type        = string
+  default     = "sa-tf-des-pgoum-01@des-pgoum.iam.gserviceaccount.com"
+}
+
 variable "apis" {
   description = "Lista de APIs de GCP a habilitar"
   type        = list(string)

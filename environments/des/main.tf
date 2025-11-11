@@ -176,13 +176,14 @@ module "storage_bucket_pgoum_frontend" {
 module "cloud_run_service_pgoum" {
   source = "../../modules/compute/cloud-run-pgoum"
 
-  service_name        = var.cloud_run_service_name_pgoum
-  region              = var.region
-  project_id          = var.project_id
-  repository          = var.artifact_repository_name_pgoum
-  image               = var.cloud_run_image_name_pgoum
-  shared_network_name = data.google_compute_network.shared.name
-  shared_subnet_name  = data.google_compute_subnetwork.shared.name
+  service_name          = var.cloud_run_service_name_pgoum
+  region                = var.region
+  project_id            = var.project_id
+  repository            = var.artifact_repository_name_pgoum
+  image                 = var.cloud_run_image_name_pgoum
+  shared_network_name   = data.google_compute_network.shared.name
+  shared_subnet_name    = data.google_compute_subnetwork.shared.name
+  service_account_email = var.service_account_email
 
   labels = {
     env      = var.environment

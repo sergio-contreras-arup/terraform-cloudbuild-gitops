@@ -44,3 +44,9 @@ variable "shared_subnet_name" {
   description = "Nombre de la subred compartida VPC"
   type        = string
 }
+
+variable "service_account_email" {
+  description = "Correo electrónico de la cuenta de servicio para Cloud Run"
+  type        = string
+  default     = ""
+}
