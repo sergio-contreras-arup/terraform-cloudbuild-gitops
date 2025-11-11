@@ -27,7 +27,8 @@ variable "apis" {
     "iam.googleapis.com",
     "sqladmin.googleapis.com", # Required for CloudSQL
     "storage.googleapis.com",
-    "run.googleapis.com", # Required for Cloud Run
+    "run.googleapis.com", # Required for Cloud Run,
+    "vpcaccess.googleapis.com"
   ]
 }
 
