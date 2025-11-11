@@ -13,10 +13,18 @@ resource "google_cloud_run_v2_service" "default" {
     service_account = var.service_account_email
 
     vpc_access {
-      network_interfaces {
-        network    = var.shared_network_name
-        subnetwork = var.shared_subnet_name
-      }
+      connector = google_vpc_access_connector.connector.name
+      egress    = "ALL_TRAFFIC"
     }
   }
+}
+
+resource "google_vpc_access_connector" "connector" {
+  name = "run-vpc"
+  subnet {
+    name = var.shared_subnet_name
+  }
+  min_instances = 2
+  max_instances = 3
+  region        = var.region
 }
