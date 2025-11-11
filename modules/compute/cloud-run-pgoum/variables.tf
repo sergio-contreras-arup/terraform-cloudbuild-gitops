@@ -35,13 +35,13 @@ variable "labels" {
   default     = {}
 }
 
-variable "shared_network_name" {
-  description = "Nombre de la red compartida VPC"
+variable "shared_network_id" {
+  description = "ID de la red compartida VPC"
   type        = string
 }
 
-variable "shared_subnet_name" {
-  description = "Nombre de la subred compartida VPC"
+variable "shared_subnet_id" {
+  description = "ID de la subred compartida VPC"
   type        = string
 }
 
