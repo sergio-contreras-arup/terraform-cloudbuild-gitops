@@ -210,6 +210,8 @@ resource "google_compute_instance" "default" {
   }
 
   network_interface {
-    subnetwork = data.google_compute_subnetwork.shared.name
+    subnetwork_project = var.host_project_id
+    network            = data.google_compute_network.shared.self_link
+    subnetwork         = data.google_compute_subnetwork.shared.self_link
   }
 }
