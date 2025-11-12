@@ -192,3 +192,23 @@ module "cloud_run_service_pgoum" {
 
   depends_on = [module.apis, module.artifact_registry_pgoum, data.google_compute_network.shared, data.google_compute_subnetwork.shared]
 }
+
+############################
+# VIRTUAL MACHINE (COMPUTE INSTANCE) PGOUM
+############################
+
+
+resource "google_compute_instance" "default" {
+  name         = "backend-pgoum"
+  machine_type = "n2-standard-2"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+    subnetwork = data.google_compute_subnetwork.shared.name
+  }
+}
