@@ -6,6 +6,7 @@ resource "google_cloud_run_v2_service" "default" {
   labels = var.labels
 
   template {
+    service_account = var.service_account_email != "" ? var.service_account_email : null
     containers {
       image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.repository}/${var.image}:${var.tag}"
     }
