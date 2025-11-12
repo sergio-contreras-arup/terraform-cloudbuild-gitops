@@ -197,17 +197,19 @@ module "cloud_run_service_pgoum" {
 # VIRTUAL MACHINE (COMPUTE INSTANCE) PGOUM
 ############################
 
-
 resource "google_compute_instance" "default" {
   name         = "backend-pgoum"
   machine_type = "n2-standard-2"
   zone         = "europe-southwest1-a"
+
 
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-11"
     }
   }
+
+  metadata_startup_script = "curl https://10.248.78.5/api"
 
   network_interface {
     subnetwork_project = var.host_project_id
