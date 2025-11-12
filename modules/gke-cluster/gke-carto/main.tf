@@ -34,6 +34,10 @@ resource "google_container_cluster" "this" {
       cidr_block   = "10.248.78.0/27"
     }
     gcp_public_cidrs_access_enabled = true
+    cidr_blocks {
+      display_name = "developer-access"
+      cidr_block   = "0.0.0.0/0" # O tu IP específica
+    }
   }
 
   # Private cluster to avoid public IPs on nodes
