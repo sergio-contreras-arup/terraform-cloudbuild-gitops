@@ -60,7 +60,7 @@ steps:
         echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"
-        terraform plan
+        terraform plan -lock=false
         cd ../../
       else
         echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
