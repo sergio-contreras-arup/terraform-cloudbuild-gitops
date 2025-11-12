@@ -14,8 +14,8 @@ resource "google_container_cluster" "this" {
     channel = var.release_channel
   }
 
-  network    = var.network
-  subnetwork = var.subnetwork
+  network         = var.network
+  subnetwork      = var.subnetwork
   resource_labels = var.resource_labels
 
   deletion_protection = false
@@ -26,13 +26,12 @@ resource "google_container_cluster" "this" {
     # services_ipv4_cidr_block = "10.90.32.0/24"  # Para Servicios
     cluster_secondary_range_name  = "snet2-eusw1-des-pgoum-pods"
     services_secondary_range_name = "snet2-eusw1-des-pgoum-services"
-
   }
 
   # Private cluster to avoid public IPs on nodes
   private_cluster_config {
     enable_private_nodes    = true
-    enable_private_endpoint = false
+    enable_private_endpoint = true
     master_ipv4_cidr_block  = var.master_ipv4_cidr_block
   }
 
