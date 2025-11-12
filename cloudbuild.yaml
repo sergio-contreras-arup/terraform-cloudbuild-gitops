@@ -82,7 +82,7 @@ steps:
         echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"     
-        terraform apply
+        terraform apply -auto-approve -lock=false
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$$BRANCH_NAME' no es un entorno predefinido valido."
