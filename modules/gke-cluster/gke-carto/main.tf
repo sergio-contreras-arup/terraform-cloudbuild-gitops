@@ -28,9 +28,13 @@ resource "google_container_cluster" "this" {
     services_secondary_range_name = "snet2-eusw1-des-pgoum-services"
   }
 
+  master_authorized_networks_config {
+
+  }
+
   # Private cluster to avoid public IPs on nodes
   private_cluster_config {
-    enable_private_nodes    = true
+    # enable_private_nodes    = true
     enable_private_endpoint = true
     master_ipv4_cidr_block  = var.master_ipv4_cidr_block
   }
