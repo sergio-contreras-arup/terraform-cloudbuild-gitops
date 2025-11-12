@@ -111,20 +111,20 @@ module "psc_endpoint_cloudsql" {
 ############################
 # GKE CLUSTER 
 ############################
-module "gke" {
-  source = "../../modules/gke-cluster/gke-carto"
+# module "gke" {
+#   source = "../../modules/gke-cluster/gke-carto"
 
-  project_id      = var.project_id
-  location        = var.gke_location
-  cluster_name    = var.gke_cluster_name
-  release_channel = var.gke_release_channel
-  network         = data.google_compute_network.shared.self_link
-  subnetwork      = data.google_compute_subnetwork.shared.self_link
-  resource_labels = {
-    env      = var.environment
-    resource = "gke-carto"
-  }
-}
+#   project_id      = var.project_id
+#   location        = var.gke_location
+#   cluster_name    = var.gke_cluster_name
+#   release_channel = var.gke_release_channel
+#   network         = data.google_compute_network.shared.self_link
+#   subnetwork      = data.google_compute_subnetwork.shared.self_link
+#   resource_labels = {
+#     env      = var.environment
+#     resource = "gke-carto"
+#   }
+# }
 
 ############################
 # STORAGE BUCKET CARTO 

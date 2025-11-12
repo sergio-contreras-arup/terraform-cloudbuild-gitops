@@ -60,7 +60,7 @@ steps:
         echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"
-        terraform plan -lock=false
+        terraform plan
         cd ../../
       else
         echo "No hay entorno oficial para la rama '$$BRANCH_NAME'."
@@ -82,7 +82,7 @@ steps:
         echo "******* Entorno: $$BRANCH_NAME *********"
         echo "*************************************************"
         cd "environments/$$BRANCH_NAME"     
-        terraform apply -auto-approve -lock=false
+        terraform apply
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$$BRANCH_NAME' no es un entorno predefinido valido."
