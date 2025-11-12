@@ -33,6 +33,7 @@ resource "google_container_cluster" "this" {
       display_name = "vpc-trust"
       cidr_block   = "10.248.78.0/27"
     }
+    gcp_public_cidrs_access_enabled = true
   }
 
   # Private cluster to avoid public IPs on nodes
