@@ -201,6 +201,7 @@ module "cloud_run_service_pgoum" {
 resource "google_compute_instance" "default" {
   name         = "backend-pgoum"
   machine_type = "n2-standard-2"
+  zone         = "europe-southwest1-a"
 
   boot_disk {
     initialize_params {
